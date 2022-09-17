@@ -1,1 +1,1 @@
-[](android/ic_launcher-playstore.png)
+![](android/ic_launcher-playstore.png)
