@@ -1,31 +1,24 @@
 package com.igrmm.igt;
 
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.igrmm.igt.screens.GameScreen;
 
-public class Igt extends ApplicationAdapter {
-	SpriteBatch batch;
-	Texture img;
-	
+public class Igt extends Game {
+
 	@Override
-	public void create () {
-		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
+	public void create() {
+		setScreen(new GameScreen());
 	}
 
 	@Override
-	public void render () {
-		ScreenUtils.clear(1, 0, 0, 1);
-		batch.begin();
-		batch.draw(img, 0, 0);
-		batch.end();
+	public void dispose() {
+		if (this.screen != null) this.screen.dispose();
 	}
-	
+
 	@Override
-	public void dispose () {
-		batch.dispose();
-		img.dispose();
+	public void render() {
+		ScreenUtils.clear(0, 0, 0, 1);
+		super.render();
 	}
 }
