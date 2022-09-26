@@ -5,9 +5,9 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Texture;
-import com.igrmm.igt.components.BoundingBoxComponent;
 import com.igrmm.igt.components.MovementComponent;
 import com.igrmm.igt.components.TextureComponent;
+import com.igrmm.igt.factories.PlayerFactory;
 import com.igrmm.igt.systems.PhysicsSystem;
 import com.igrmm.igt.systems.RenderingSystem;
 import com.igrmm.igt.systems.UserInterfaceSystem;
@@ -18,15 +18,9 @@ public class GameScreen extends ScreenAdapter {
 	private final Engine engine = new PooledEngine();
 
 	public GameScreen() {
-		Entity playerEntity = engine.createEntity();
-		engine.addEntity(playerEntity);
+		Entity playerEntity = PlayerFactory.createPlayer(engine);
 		playerEntity.add(new TextureComponent(img));
-		MovementComponent playerMovementC = new MovementComponent();
-		playerMovementC.maxSpeed = 240f;
-		playerMovementC.acceleration = 1080f;
-		playerMovementC.friction = 1080f;
-		playerEntity.add(playerMovementC);
-		playerEntity.add(new BoundingBoxComponent());
+		MovementComponent playerMovementC = playerEntity.getComponent(MovementComponent.class);
 		engine.addSystem(new UserInterfaceSystem(playerMovementC));
 		engine.addSystem(new PhysicsSystem());
 		engine.addSystem(new RenderingSystem(bg));
