@@ -1,0 +1,28 @@
+{
+    "automappingRulesFile": "",
+    "commands": [
+    ],
+    "extensionsPath": "extensions",
+    "folders": [
+        "."
+    ],
+    "propertyTypes": [
+        {
+            "color": "#ffa0a0a4",
+            "id": 1,
+            "members": [
+                {
+                    "name": "groundType",
+                    "type": "string",
+                    "value": "dirt"
+                }
+            ],
+            "name": "block",
+            "type": "class",
+            "useAs": [
+                "property",
+                "object"
+            ]
+        }
+    ]
+}
