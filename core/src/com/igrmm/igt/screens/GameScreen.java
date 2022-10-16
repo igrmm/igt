@@ -6,7 +6,7 @@ import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.igrmm.igt.Igt;
 import com.igrmm.igt.components.MovementComponent;
 import com.igrmm.igt.components.TextureComponent;
 import com.igrmm.igt.factories.PlayerFactory;
@@ -16,10 +16,11 @@ import com.igrmm.igt.systems.UserInterfaceSystem;
 
 public class GameScreen extends ScreenAdapter {
 	private final Texture img = new Texture("img.png");
-	private final TiledMap tiledMap = new TmxMapLoader().load("tiled/maps/start.tmx");
+	private final TiledMap tiledMap;
 	private final Engine engine = new PooledEngine();
 
-	public GameScreen() {
+	public GameScreen(Igt game) {
+		tiledMap = game.assets.getTiledMap("start");
 		Entity playerEntity = PlayerFactory.createPlayer(engine);
 		playerEntity.add(new TextureComponent(img));
 		MovementComponent playerMovementC = playerEntity.getComponent(MovementComponent.class);

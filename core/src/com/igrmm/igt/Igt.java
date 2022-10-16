@@ -5,15 +5,18 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.igrmm.igt.screens.GameScreen;
 
 public class Igt extends Game {
+	public final Assets assets = new Assets();
 
 	@Override
 	public void create() {
-		setScreen(new GameScreen());
+		assets.loadAll();
+		setScreen(new GameScreen(this));
 	}
 
 	@Override
 	public void dispose() {
 		if (this.screen != null) this.screen.dispose();
+		assets.dispose();
 	}
 
 	@Override
