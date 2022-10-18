@@ -1,5 +1,5 @@
 /*****************************************
- *	This class is a wrapper for animations
+ *  This class is a wrapper for animations
  *  made with Aseprite. It uses the json
  *  file exported by the program.
  *****************************************/
