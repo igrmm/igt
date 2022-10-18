@@ -10,7 +10,7 @@ public class Igt extends Game {
 	@Override
 	public void create() {
 		assets.loadAll();
-		setScreen(new GameScreen(this));
+		setScreen(GameScreen.createGameScreen(this));
 	}
 
 	@Override
