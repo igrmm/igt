@@ -6,28 +6,29 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
+import com.igrmm.igt.components.AnimationComponent;
 import com.igrmm.igt.components.BoundingBoxComponent;
-import com.igrmm.igt.components.TextureComponent;
 
 public class RenderingSystem extends IteratingSystem implements Disposable {
 	private final SpriteBatch batch;
 	private final OrthographicCamera camera;
 	private final OrthogonalTiledMapRenderer mapRenderer;
 	private final Array<Entity> renderQueue;
-	private final ComponentMapper<TextureComponent> textureM;
+	private final ComponentMapper<AnimationComponent> animationM;
 	private final ComponentMapper<BoundingBoxComponent> bBoxM;
 
 	public RenderingSystem(TiledMap tiledMap) {
-		super(Family.all(BoundingBoxComponent.class, TextureComponent.class).get());
+		super(Family.all(BoundingBoxComponent.class, AnimationComponent.class).get());
 		batch = new SpriteBatch();
 		camera = new OrthographicCamera();
 		mapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
 		renderQueue = new Array<>();
-		textureM = ComponentMapper.getFor(TextureComponent.class);
+		animationM = ComponentMapper.getFor(AnimationComponent.class);
 		bBoxM = ComponentMapper.getFor(BoundingBoxComponent.class);
 		camera.position.x = 16f;
 		camera.position.y = 16f;
@@ -42,9 +43,12 @@ public class RenderingSystem extends IteratingSystem implements Disposable {
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		for (Entity entity : renderQueue) {
-			TextureComponent textureC = textureM.get(entity);
+			AnimationComponent animationC = animationM.get(entity);
+			String currentAnimation = animationC.currentAnimation;
+			animationC.stateTime += deltaTime;
+			TextureRegion tex = animationC.animations.get(currentAnimation).getKeyFrame(animationC.stateTime, true);
 			BoundingBoxComponent bBoxC = bBoxM.get(entity);
-			batch.draw(textureC.texture, bBoxC.bBox.x, 0);
+			batch.draw(tex, bBoxC.bBox.x, 0);
 		}
 		batch.end();
 		renderQueue.clear();
