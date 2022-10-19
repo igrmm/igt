@@ -22,16 +22,16 @@ public class PhysicsSystem extends IteratingSystem {
 		MovementComponent movementC = movementM.get(entity);
 		BoundingBoxComponent bBoxC = bBoxM.get(entity);
 
-		/* acceleration */
+		//acceleration
 		movementC.speed.x += movementC.movementSignalIntention * movementC.acceleration * deltaTime * deltaTime;
 
-		/* max speed */
+		//max speed
 		if (movementC.movementSignalIntention != 0)
 			movementC.speed.x = Math.abs(movementC.speed.x) < movementC.maxSpeed * deltaTime
 					? movementC.speed.x
 					: movementC.maxSpeed * deltaTime * movementC.movementSignalIntention;
 
-		/* friction */
+		//friction
 		if (movementC.movementSignalIntention == 0 && movementC.speed.x != 0) {
 			if (movementC.speed.x < 0) {
 				movementC.speed.x += movementC.friction * deltaTime * deltaTime;
