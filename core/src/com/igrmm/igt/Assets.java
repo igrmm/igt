@@ -29,16 +29,19 @@ public class Assets {
 	}
 
 	public void loadAll() {
+		//load tiled maps
 		FileHandle mapsDirHandle = Gdx.files.internal(MAPS_DIR);
 		for (FileHandle mapFileHandle : mapsDirHandle.list()) {
 			assetManager.load(mapFileHandle.path(), TiledMap.class);
 		}
 
+		//load textures
 		FileHandle texturesDirHandle = Gdx.files.internal(TEXTURES_DIR);
 		for (FileHandle textureFileHandle : texturesDirHandle.list()) {
 			assetManager.load(textureFileHandle.path(), Texture.class);
 		}
 
+		//load animations json
 		Array<String> animationJsonPaths = new Array<>();
 		FileHandle animationsDirHandle = Gdx.files.internal(ANIMATIONS_DIR);
 		for (FileHandle animationFileHandle : animationsDirHandle.list()) {
@@ -48,6 +51,7 @@ public class Assets {
 
 		assetManager.finishLoading();
 
+		//make animations from json
 		for (String animationJsonPath : animationJsonPaths) {
 			JsonValue animationJson = assetManager.get(animationJsonPath, JsonValue.class);
 			String texturePath = TEXTURES_DIR + animationJson.get("meta").getString("image");
