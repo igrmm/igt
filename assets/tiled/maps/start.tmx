@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="8" tileheight="8" infinite="0" nextlayerid="4" nextobjectid="6">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="8" tileheight="8" infinite="0" nextlayerid="4" nextobjectid="8">
  <tileset firstgid="1" source="../tilesets/tileset.tsx"/>
  <layer id="1" name="0" width="100" height="100">
   <data encoding="base64" compression="zlib">
@@ -8,11 +8,7 @@
  </layer>
  <group id="2" name="Objects">
   <objectgroup id="3" name="block">
-   <object id="3" name="block" class="block" x="344" y="392" width="216" height="48">
-    <properties>
-     <property name="groundType" value="dirt"/>
-    </properties>
-   </object>
+   <object id="7" template="../objects/block.tx" x="344" y="392" width="216" height="48"/>
   </objectgroup>
  </group>
 </map>
