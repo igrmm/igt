@@ -45,10 +45,11 @@ public class RenderingSystem extends IteratingSystem implements Disposable {
 		for (Entity entity : renderQueue) {
 			AnimationComponent animationC = animationM.get(entity);
 			String currentAnimation = animationC.currentAnimation;
+			float offset = animationC.offset;
 			animationC.stateTime += deltaTime;
 			TextureRegion tex = animationC.animations.get(currentAnimation).getKeyFrame(animationC.stateTime, true);
 			BoundingBoxComponent bBoxC = bBoxM.get(entity);
-			batch.draw(tex, bBoxC.bBox.x, 0);
+			batch.draw(tex, bBoxC.bBox.x - offset, bBoxC.bBox.y - offset);
 		}
 		batch.end();
 		renderQueue.clear();

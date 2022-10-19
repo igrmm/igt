@@ -26,6 +26,7 @@ public class PlayerFactory {
 		AnimationComponent playerAnimationC = playerEntity.getComponent(AnimationComponent.class);
 
 		playerAnimationC.currentAnimation = "idle_right";
+		playerAnimationC.offset = 16f;
 		playerMovementC.maxSpeed = 240f;
 		playerMovementC.acceleration = 1080f;
 		playerMovementC.friction = 1080f;
