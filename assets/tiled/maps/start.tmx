@@ -6,7 +6,7 @@
    eJzt0YkJACAMBEEfUPuv2FQREpiBLeC4MQAAAAAAAAAAAAAAAAAAAAAAAADqm9FKaGcNau5EN6GXNag5f9Tij1r8UYs/AAAAAAAAAAAAAAAAAAAAAADo4gPqzgPo
   </data>
  </layer>
- <group id="2" name="Objects">
+ <group id="2" name="objects">
   <objectgroup id="3" name="block">
    <object id="7" template="../objects/block.tx" x="344" y="392" width="216" height="48"/>
   </objectgroup>
