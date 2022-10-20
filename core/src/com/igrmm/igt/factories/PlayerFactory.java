@@ -5,7 +5,7 @@ import com.badlogic.ashley.core.Entity;
 import com.igrmm.igt.AsepriteAnimation;
 import com.igrmm.igt.Assets;
 import com.igrmm.igt.components.AnimationComponent;
-import com.igrmm.igt.components.BoundingBoxComponent;
+import com.igrmm.igt.components.boundingboxes.BoundingBoxComponent;
 import com.igrmm.igt.components.MovementComponent;
 
 public class PlayerFactory {

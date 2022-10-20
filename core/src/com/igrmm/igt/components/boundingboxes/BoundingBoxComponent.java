@@ -1,4 +1,4 @@
-package com.igrmm.igt.components;
+package com.igrmm.igt.components.boundingboxes;
 
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.math.Rectangle;
