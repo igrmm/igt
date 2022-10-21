@@ -8,20 +8,83 @@
     ],
     "propertyTypes": [
         {
-            "color": "#ffa0a0a4",
-            "id": 1,
+            "color": "#ffffffff",
+            "id": 2,
             "members": [
-                {
-                    "name": "groundType",
-                    "type": "string",
-                    "value": "dirt"
-                }
             ],
             "name": "block",
             "type": "class",
             "useAs": [
-                "property",
                 "object"
+            ]
+        },
+        {
+            "color": "#ffa0a0a4",
+            "id": 7,
+            "members": [
+                {
+                    "name": "name",
+                    "type": "string",
+                    "value": "start"
+                }
+            ],
+            "name": "mapComponent",
+            "type": "class",
+            "useAs": [
+                "property"
+            ]
+        },
+        {
+            "color": "#ff00ff14",
+            "id": 5,
+            "members": [
+                {
+                    "name": "spawnPointComponent",
+                    "propertyType": "spawnPointComponent",
+                    "type": "class",
+                    "value": {
+                    }
+                }
+            ],
+            "name": "spawn-point",
+            "type": "class",
+            "useAs": [
+                "object",
+                "tile"
+            ]
+        },
+        {
+            "color": "#ffa0a0a4",
+            "id": 6,
+            "members": [
+                {
+                    "name": "name",
+                    "type": "string",
+                    "value": "start"
+                }
+            ],
+            "name": "spawnPointComponent",
+            "type": "class",
+            "useAs": [
+                "property"
+            ]
+        },
+        {
+            "color": "#ff0000ff",
+            "id": 8,
+            "members": [
+            ],
+            "name": "spawner",
+            "type": "class",
+            "useAs": [
+                "property",
+                "map",
+                "layer",
+                "object",
+                "tile",
+                "tileset",
+                "wangcolor",
+                "wangset"
             ]
         }
     ]
