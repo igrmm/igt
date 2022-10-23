@@ -1,29 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="8" tileheight="8" infinite="0" nextlayerid="6" nextobjectid="30">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="8" tileheight="8" infinite="0" nextlayerid="6" nextobjectid="49">
  <tileset firstgid="1" source="../tilesets/tileset.tsx"/>
  <tileset firstgid="36" source="../objects/objects.tsx"/>
  <layer id="1" name="0" width="100" height="100">
   <data encoding="base64" compression="zlib">
-   eJzt0YkJACAQA0EfUPuv2KviVJyBLSCkFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIA/1Kgl1LMGPW5EM6GVNehx/riLP87aM4QCbg==
+   eJzt0csJACAMREE/oPZfsanBS4TMwLsvbGsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAdfRoPDQzxhawov3QyRhbgD/+4o88F+7MAVo=
   </data>
  </layer>
  <group id="2" name="objects">
-  <objectgroup id="5" name="spawner">
-   <object id="29" name="spawner" class="spawner" x="32" y="736" width="216" height="32"/>
-  </objectgroup>
   <objectgroup id="4" name="spawn-point">
-   <object id="22" name="desert" gid="36" x="32" y="768" width="32" height="32">
+   <object id="48" name="start" class="spawn-point" gid="36" x="40" y="768" width="32" height="32">
     <properties>
      <property name="spawnPointComponent" type="class" propertytype="spawnPointComponent">
       <properties>
-       <property name="name" value="desert"/>
+       <property name="name" value="start"/>
       </properties>
      </property>
     </properties>
    </object>
   </objectgroup>
   <objectgroup id="3" name="block">
-   <object id="27" class="block" x="32" y="768" width="216" height="32"/>
+   <object id="47" class="block" x="40" y="768" width="120" height="32"/>
   </objectgroup>
  </group>
 </map>
