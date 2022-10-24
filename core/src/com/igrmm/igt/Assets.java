@@ -94,7 +94,7 @@ public class Assets {
 		FileHandle saveFileHandle = Gdx.files.local(SAVE_PATH);
 		saveFileHandle.writeString(saveString, false);
 		if (saveFileHandle.exists()) {
-			assetManager.unload(SAVE_PATH);
+			if (assetManager.contains(SAVE_PATH)) assetManager.unload(SAVE_PATH);
 			assetManager.load(SAVE_PATH, JsonValue.class);
 			assetManager.finishLoadingAsset(SAVE_PATH);
 		}
