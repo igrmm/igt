@@ -17,7 +17,7 @@ public class Assets {
 	public static final String MAPS_DIR = "tiled/maps/";
 	public static final String TEXTURES_DIR = "textures/";
 	public static final String ANIMATIONS_DIR = "animations/";
-	public static final String SAVE_PATH = "";
+	public static final String SAVE_PATH = "save.json";
 
 	private final AssetManager assetManager;
 	private final Map<String, AsepriteAnimation> asepriteAnimations;
