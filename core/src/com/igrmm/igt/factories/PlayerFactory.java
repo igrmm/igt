@@ -5,6 +5,7 @@ import com.badlogic.ashley.core.Entity;
 import com.igrmm.igt.AsepriteAnimation;
 import com.igrmm.igt.Assets;
 import com.igrmm.igt.components.AnimationComponent;
+import com.igrmm.igt.components.StatisticsComponent;
 import com.igrmm.igt.components.boundingboxes.BoundingBoxComponent;
 import com.igrmm.igt.components.MovementComponent;
 
@@ -17,6 +18,7 @@ public class PlayerFactory {
 		AsepriteAnimation asepriteAnimation = assets.getAsepriteAnimation("player");
 
 		//Create components
+		playerEntity.add(new StatisticsComponent());
 		playerEntity.add(new BoundingBoxComponent());
 		playerEntity.add(new MovementComponent());
 		playerEntity.add(new AnimationComponent(asepriteAnimation));
