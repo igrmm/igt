@@ -7,6 +7,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 
 import java.util.HashMap;
@@ -16,9 +17,12 @@ public class Assets {
 	public static final String MAPS_DIR = "tiled/maps/";
 	public static final String TEXTURES_DIR = "textures/";
 	public static final String ANIMATIONS_DIR = "animations/";
+	public static final String SAVE_PATH = "";
 
 	private final AssetManager assetManager;
 	private final Map<String, AsepriteAnimation> asepriteAnimations;
+
+	private Save save = new Save();
 
 	public Assets() {
 		assetManager = new AssetManager();
@@ -28,6 +32,10 @@ public class Assets {
 	}
 
 	public void loadAll() {
+		//load save file
+		FileHandle saveFileHandle = Gdx.files.local(SAVE_PATH);
+		if (saveFileHandle.exists()) assetManager.load(SAVE_PATH, JsonValue.class);
+
 		//load tiled maps
 		FileHandle mapsDirHandle = Gdx.files.internal(MAPS_DIR);
 		for (FileHandle mapFileHandle : mapsDirHandle.list()) {
@@ -71,6 +79,25 @@ public class Assets {
 	 */
 	public AsepriteAnimation getAsepriteAnimation(String asepriteAnimationName) {
 		return asepriteAnimations.get(ANIMATIONS_DIR + asepriteAnimationName + ".json");
+	}
+
+	public Save getSave() {
+		if (assetManager.contains(SAVE_PATH)) {
+			JsonValue saveJson = assetManager.get(SAVE_PATH, JsonValue.class);
+			save = new Json().fromJson(Save.class, saveJson.toString());
+		}
+		return save;
+	}
+
+	public void flushSave() {
+		String saveString = new Json().prettyPrint(save);
+		FileHandle saveFileHandle = Gdx.files.local(SAVE_PATH);
+		saveFileHandle.writeString(saveString, false);
+		if (saveFileHandle.exists()) {
+			assetManager.unload(SAVE_PATH);
+			assetManager.load(SAVE_PATH, JsonValue.class);
+			assetManager.finishLoadingAsset(SAVE_PATH);
+		}
 	}
 
 	public void dispose() {
