@@ -6,7 +6,6 @@ import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.JsonValue;
 
@@ -23,7 +22,7 @@ public class Assets {
 
 	public Assets() {
 		assetManager = new AssetManager();
-		assetManager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
+		assetManager.setLoader(TiledMap.class, new IgtTmxMapLoader(new InternalFileHandleResolver()));
 		assetManager.setLoader(JsonValue.class, new JsonLoader(new InternalFileHandleResolver()));
 		asepriteAnimations = new HashMap<>();
 	}
