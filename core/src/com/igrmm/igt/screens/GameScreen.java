@@ -13,6 +13,7 @@ import com.igrmm.igt.components.boundingboxes.MapComponent;
 import com.igrmm.igt.factories.PlayerFactory;
 import com.igrmm.igt.systems.PhysicsSystem;
 import com.igrmm.igt.systems.RenderingSystem;
+import com.igrmm.igt.systems.TimeTrackingSystem;
 import com.igrmm.igt.systems.UserInterfaceSystem;
 
 public class GameScreen extends ScreenAdapter {
@@ -33,6 +34,7 @@ public class GameScreen extends ScreenAdapter {
 		engine.addSystem(new UserInterfaceSystem(playerMovementC));
 		engine.addSystem(new PhysicsSystem());
 		engine.addSystem(new RenderingSystem(tiledMap));
+		engine.addSystem(new TimeTrackingSystem());
 		return new GameScreen(engine);
 	}
 
