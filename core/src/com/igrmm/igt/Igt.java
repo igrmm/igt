@@ -15,6 +15,7 @@ public class Igt extends Game {
 
 	@Override
 	public void dispose() {
+		assets.flushSave();
 		if (this.screen != null) this.screen.dispose();
 		assets.dispose();
 	}
