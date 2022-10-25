@@ -8,7 +8,6 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.igrmm.igt.Assets;
 import com.igrmm.igt.Igt;
 import com.igrmm.igt.Save;
-import com.igrmm.igt.components.MovementComponent;
 import com.igrmm.igt.components.MapComponent;
 import com.igrmm.igt.factories.PlayerFactory;
 import com.igrmm.igt.systems.PhysicsSystem;
@@ -30,11 +29,10 @@ public class GameScreen extends ScreenAdapter {
 		MapComponent mapC = save.mapC;
 		TiledMap tiledMap = assets.getTiledMap(mapC.name);
 		Entity playerEntity = PlayerFactory.createPlayer(engine, assets);
-		MovementComponent playerMovementC = playerEntity.getComponent(MovementComponent.class);
-		engine.addSystem(new UserInterfaceSystem(playerMovementC));
+		engine.addSystem(new UserInterfaceSystem(playerEntity));
 		engine.addSystem(new PhysicsSystem());
 		engine.addSystem(new RenderingSystem(tiledMap));
-		engine.addSystem(new TimeTrackingSystem());
+		engine.addSystem(new TimeTrackingSystem(playerEntity));
 		return new GameScreen(engine);
 	}
 

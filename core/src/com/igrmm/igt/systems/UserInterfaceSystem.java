@@ -1,5 +1,6 @@
 package com.igrmm.igt.systems;
 
+import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -14,20 +15,21 @@ public class UserInterfaceSystem extends EntitySystem implements Disposable {
 	private boolean rightPressed = false;
 	private boolean leftPressed = false;
 
-	public UserInterfaceSystem(final MovementComponent playerMovementC) {
+	public UserInterfaceSystem(Entity playerEntity) {
+		final MovementComponent playerMovC = playerEntity.getComponent(MovementComponent.class);
 		stage = new Stage();
 		Gdx.input.setInputProcessor(stage);
 		stage.addListener(new InputListener() {
 			public boolean keyDown(InputEvent event, int keycode) {
 				if (keycode == Input.Keys.A) {
-					playerMovementC.movementSignalIntention =
-							playerMovementC.movementSignalIntention > 0 ? 0 : MovementComponent.LEFT_SIGNAL;
+					playerMovC.movementSignalIntention =
+							playerMovC.movementSignalIntention > 0 ? 0 : MovementComponent.LEFT_SIGNAL;
 					leftPressed = true;
 				}
 
 				if (keycode == Input.Keys.D) {
-					playerMovementC.movementSignalIntention =
-							playerMovementC.movementSignalIntention < 0 ? 0 : MovementComponent.RIGHT_SIGNAL;
+					playerMovC.movementSignalIntention =
+							playerMovC.movementSignalIntention < 0 ? 0 : MovementComponent.RIGHT_SIGNAL;
 					rightPressed = true;
 				}
 
@@ -36,12 +38,12 @@ public class UserInterfaceSystem extends EntitySystem implements Disposable {
 
 			public boolean keyUp(InputEvent event, int keycode) {
 				if (keycode == Input.Keys.A) {
-					playerMovementC.movementSignalIntention = rightPressed ? MovementComponent.RIGHT_SIGNAL : 0;
+					playerMovC.movementSignalIntention = rightPressed ? MovementComponent.RIGHT_SIGNAL : 0;
 					leftPressed = false;
 				}
 
 				if (keycode == Input.Keys.D) {
-					playerMovementC.movementSignalIntention = leftPressed ? MovementComponent.LEFT_SIGNAL : 0;
+					playerMovC.movementSignalIntention = leftPressed ? MovementComponent.LEFT_SIGNAL : 0;
 					rightPressed = false;
 				}
 
