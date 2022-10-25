@@ -20,11 +20,11 @@ public class PlayerFactory {
 
 		//Default components
 		playerEntity.add(new BoundingBoxComponent());
-		playerEntity.add(new MovementComponent());
 		playerEntity.add(new AnimationComponent(asepriteAnimation));
 
 		//Serializable components
 		playerEntity.add(save.statisticsComponent);
+		playerEntity.add(save.movementComponent);
 
 		//Tweak numbers
 		MovementComponent playerMovementC = playerEntity.getComponent(MovementComponent.class);
@@ -32,9 +32,12 @@ public class PlayerFactory {
 
 		playerAnimationC.currentAnimation = "idle_right";
 		playerAnimationC.offset = 16f;
-		playerMovementC.maxSpeed = 240f;
-		playerMovementC.acceleration = 1080f;
-		playerMovementC.friction = 1080f;
+
+		if (!save.isLoaded()) {
+			playerMovementC.maxSpeed = 240f;
+			playerMovementC.acceleration = 1080f;
+			playerMovementC.friction = 1080f;
+		}
 
 		return playerEntity;
 	}
