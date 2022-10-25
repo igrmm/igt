@@ -29,16 +29,16 @@ public class PlayerFactory {
 		playerEntity.add(save.movementC);
 
 		//Tweak numbers
-		MovementComponent playerMovementC = playerEntity.getComponent(MovementComponent.class);
+		MovementComponent playerMovC = playerEntity.getComponent(MovementComponent.class);
 		AnimationComponent playerAnimationC = playerEntity.getComponent(AnimationComponent.class);
 
 		playerAnimationC.currentAnimation = "idle_right";
 		playerAnimationC.offset = 16f;
 
 		if (!save.isLoaded()) {
-			playerMovementC.maxSpeed = 240f;
-			playerMovementC.acceleration = 1080f;
-			playerMovementC.friction = 1080f;
+			playerMovC.maxSpeed = 240f;
+			playerMovC.acceleration = 1080f;
+			playerMovC.friction = 1080f;
 		}
 
 		return playerEntity;
