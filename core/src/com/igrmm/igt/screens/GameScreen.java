@@ -9,7 +9,7 @@ import com.igrmm.igt.Assets;
 import com.igrmm.igt.Igt;
 import com.igrmm.igt.Save;
 import com.igrmm.igt.components.MovementComponent;
-import com.igrmm.igt.components.boundingboxes.MapComponent;
+import com.igrmm.igt.components.MapComponent;
 import com.igrmm.igt.factories.PlayerFactory;
 import com.igrmm.igt.systems.PhysicsSystem;
 import com.igrmm.igt.systems.RenderingSystem;
