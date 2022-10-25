@@ -2,15 +2,14 @@ package com.igrmm.igt;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.igrmm.igt.screens.GameScreen;
+import com.igrmm.igt.screens.LoadingScreen;
 
 public class Igt extends Game {
 	public final Assets assets = new Assets();
 
 	@Override
 	public void create() {
-		assets.loadAll();
-		setScreen(GameScreen.createGameScreen(this));
+		setScreen(new LoadingScreen(this));
 	}
 
 	@Override
