@@ -24,6 +24,8 @@ public class PlayerFactory {
 
 		//Serializable components
 		playerEntity.add(save.statisticsC);
+		playerEntity.add(save.spawnPointC);
+		playerEntity.add(save.mapC);
 		playerEntity.add(save.movementC);
 
 		//Tweak numbers
