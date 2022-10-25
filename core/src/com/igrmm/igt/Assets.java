@@ -85,7 +85,6 @@ public class Assets {
 		if (assetManager.contains(SAVE_PATH)) {
 			JsonValue saveJson = assetManager.get(SAVE_PATH, JsonValue.class);
 			save = new Json().fromJson(Save.class, saveJson.toString());
-			save.setLoaded(true);
 		}
 		return save;
 	}
