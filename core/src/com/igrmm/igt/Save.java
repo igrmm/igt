@@ -8,10 +8,10 @@ import com.igrmm.igt.components.MapComponent;
 public class Save {
 	private transient boolean loaded = false;
 
-	public final StatisticsComponent statisticsComponent = new StatisticsComponent();
-	public final SpawnPointComponent spawnPointComponent = new SpawnPointComponent();
-	public final MapComponent mapComponent = new MapComponent();
-	public final MovementComponent movementComponent = new MovementComponent();
+	public final StatisticsComponent statisticsC = new StatisticsComponent();
+	public final SpawnPointComponent spawnPointC = new SpawnPointComponent();
+	public final MapComponent mapC = new MapComponent();
+	public final MovementComponent movementC = new MovementComponent();
 
 	public boolean isLoaded() {
 		return this.loaded;

@@ -27,8 +27,8 @@ public class GameScreen extends ScreenAdapter {
 		Engine engine = new PooledEngine();
 		Assets assets = game.assets;
 		Save save = assets.getSave();
-		MapComponent mapComponent = save.mapComponent;
-		TiledMap tiledMap = assets.getTiledMap(mapComponent.name);
+		MapComponent mapC = save.mapC;
+		TiledMap tiledMap = assets.getTiledMap(mapC.name);
 		Entity playerEntity = PlayerFactory.createPlayer(engine, assets);
 		MovementComponent playerMovementC = playerEntity.getComponent(MovementComponent.class);
 		engine.addSystem(new UserInterfaceSystem(playerMovementC));

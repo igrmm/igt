@@ -23,8 +23,8 @@ public class PlayerFactory {
 		playerEntity.add(new AnimationComponent(asepriteAnimation));
 
 		//Serializable components
-		playerEntity.add(save.statisticsComponent);
-		playerEntity.add(save.movementComponent);
+		playerEntity.add(save.statisticsC);
+		playerEntity.add(save.movementC);
 
 		//Tweak numbers
 		MovementComponent playerMovementC = playerEntity.getComponent(MovementComponent.class);
