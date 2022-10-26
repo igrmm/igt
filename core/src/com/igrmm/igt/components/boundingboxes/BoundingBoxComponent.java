@@ -8,5 +8,13 @@ import com.badlogic.gdx.math.Rectangle;
  * making it easy to identify entities.
  */
 public class BoundingBoxComponent implements Component {
-	public final Rectangle bBox = new Rectangle();
+	public final Rectangle bbox;
+
+	public BoundingBoxComponent() {
+		bbox = new Rectangle();
+	}
+
+	public BoundingBoxComponent(float x, float y, float width, float height) {
+		bbox = new Rectangle(x, y, width, height);
+	}
 }
