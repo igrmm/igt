@@ -20,7 +20,7 @@ public class RenderingSystem extends IteratingSystem implements Disposable {
 	private final OrthogonalTiledMapRenderer mapRenderer;
 	private final Array<Entity> renderQueue;
 	private final ComponentMapper<AnimationComponent> animationM;
-	private final ComponentMapper<BoundingBoxComponent> bBoxM;
+	private final ComponentMapper<BoundingBoxComponent> bboxM;
 
 	public RenderingSystem(TiledMap tiledMap) {
 		super(Family.all(BoundingBoxComponent.class, AnimationComponent.class).get());
@@ -29,7 +29,7 @@ public class RenderingSystem extends IteratingSystem implements Disposable {
 		mapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
 		renderQueue = new Array<>();
 		animationM = ComponentMapper.getFor(AnimationComponent.class);
-		bBoxM = ComponentMapper.getFor(BoundingBoxComponent.class);
+		bboxM = ComponentMapper.getFor(BoundingBoxComponent.class);
 		camera.position.x = 16f;
 		camera.position.y = 16f;
 	}
@@ -48,8 +48,8 @@ public class RenderingSystem extends IteratingSystem implements Disposable {
 			float offset = animationC.offset;
 			animationC.stateTime += deltaTime;
 			TextureRegion tex = animationC.animations.get(currentAnimation).getKeyFrame(animationC.stateTime, true);
-			BoundingBoxComponent bBoxC = bBoxM.get(entity);
-			batch.draw(tex, bBoxC.bBox.x - offset, bBoxC.bBox.y - offset);
+			BoundingBoxComponent bboxC = bboxM.get(entity);
+			batch.draw(tex, bboxC.bbox.x - offset, bboxC.bbox.y - offset);
 		}
 		batch.end();
 		renderQueue.clear();

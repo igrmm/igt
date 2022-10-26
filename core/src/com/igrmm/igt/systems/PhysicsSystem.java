@@ -9,18 +9,18 @@ import com.igrmm.igt.components.MovementComponent;
 
 public class PhysicsSystem extends IteratingSystem {
 	private final ComponentMapper<MovementComponent> movementM;
-	private final ComponentMapper<BoundingBoxComponent> bBoxM;
+	private final ComponentMapper<BoundingBoxComponent> bboxM;
 
 	public PhysicsSystem() {
 		super(Family.all(MovementComponent.class, BoundingBoxComponent.class).get());
 		movementM = ComponentMapper.getFor(MovementComponent.class);
-		bBoxM = ComponentMapper.getFor(BoundingBoxComponent.class);
+		bboxM = ComponentMapper.getFor(BoundingBoxComponent.class);
 	}
 
 	@Override
 	protected void processEntity(Entity entity, float deltaTime) {
 		MovementComponent movementC = movementM.get(entity);
-		BoundingBoxComponent bBoxC = bBoxM.get(entity);
+		BoundingBoxComponent bboxC = bboxM.get(entity);
 
 		//acceleration
 		movementC.speed.x += movementC.movementSignalIntention * movementC.acceleration * deltaTime * deltaTime;
@@ -42,6 +42,6 @@ public class PhysicsSystem extends IteratingSystem {
 			}
 		}
 
-		bBoxC.bBox.x += movementC.speed.x;
+		bboxC.bbox.x += movementC.speed.x;
 	}
 }
