@@ -4,12 +4,16 @@ import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.maps.MapGroupLayer;
+import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.igrmm.igt.Assets;
 import com.igrmm.igt.Igt;
 import com.igrmm.igt.Save;
 import com.igrmm.igt.components.MapComponent;
 import com.igrmm.igt.factories.PlayerFactory;
+import com.igrmm.igt.factories.TiledMapEntityFactory;
 import com.igrmm.igt.systems.PhysicsSystem;
 import com.igrmm.igt.systems.RenderingSystem;
 import com.igrmm.igt.systems.TimeTrackingSystem;
@@ -28,6 +32,15 @@ public class GameScreen extends ScreenAdapter {
 		Save save = assets.getSave();
 		MapComponent mapC = save.mapC;
 		TiledMap tiledMap = assets.getTiledMap(mapC.name);
+
+		//Get entities from tiled map
+		MapGroupLayer objectsLayer = (MapGroupLayer) tiledMap.getLayers().get("objects");
+		for (MapLayer mapLayer : objectsLayer.getLayers()) {
+			for (MapObject mapObject : mapLayer.getObjects()) {
+				engine.addEntity(TiledMapEntityFactory.createEntity(mapObject));
+			}
+		}
+
 		Entity playerEntity = PlayerFactory.createPlayer(engine, assets);
 		engine.addSystem(new UserInterfaceSystem(playerEntity));
 		engine.addSystem(new PhysicsSystem());
