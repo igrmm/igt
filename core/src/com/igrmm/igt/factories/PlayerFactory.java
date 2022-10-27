@@ -1,5 +1,6 @@
 package com.igrmm.igt.factories;
 
+import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
@@ -21,22 +22,29 @@ public class PlayerFactory {
 		engine.addEntity(playerE);
 		Save save = assets.getSave();
 
-		//Components dependencies
+		//component mappers
+		ComponentMapper<MovementComponent> movementM = ComponentMapper.getFor(MovementComponent.class);
+		ComponentMapper<AnimationComponent> animationM = ComponentMapper.getFor(AnimationComponent.class);
+		ComponentMapper<SpawnPointComponent> spawnPointM = ComponentMapper.getFor(SpawnPointComponent.class);
+		ComponentMapper<BoundingBoxComponent> bboxM = ComponentMapper.getFor(BoundingBoxComponent.class);
+		ComponentMapper<SpawnPointBoundingBoxComponent> spawnPointbboxM = ComponentMapper.getFor(SpawnPointBoundingBoxComponent.class);
+
+		//components dependencies
 		AsepriteAnimation asepriteAnimation = assets.getAsepriteAnimation("player");
 
-		//Default components
+		//default components
 		playerE.add(new BoundingBoxComponent());
 		playerE.add(new AnimationComponent(asepriteAnimation));
 		playerE.add(new MovementComponent());
 
-		//Serializable components
+		//serializable components
 		playerE.add(save.statisticsC);
 		playerE.add(save.spawnPointC);
 		playerE.add(save.mapC);
 
-		//Tweak numbers
-		MovementComponent playerMovC = playerE.getComponent(MovementComponent.class);
-		AnimationComponent playerAnimationC = playerE.getComponent(AnimationComponent.class);
+		//tweak numbers
+		MovementComponent playerMovC = movementM.get(playerE);
+		AnimationComponent playerAnimationC = animationM.get(playerE);
 
 		playerAnimationC.currentAnimation = "idle_right";
 		playerAnimationC.offset = 16f;
@@ -45,14 +53,13 @@ public class PlayerFactory {
 		playerMovC.friction = 1080f;
 
 		//make player spawn at saved spawn point
-		SpawnPointComponent playerSpawnPointC = playerE.getComponent(SpawnPointComponent.class);
-		BoundingBoxComponent playerBboxC = playerE.getComponent(BoundingBoxComponent.class);
+		SpawnPointComponent playerSpawnPointC = spawnPointM.get(playerE);
+		BoundingBoxComponent playerBboxC = bboxM.get(playerE);
 		Rectangle playerBbox = playerBboxC.bbox;
 		for (Entity spawnPointE : engine.getEntitiesFor(Family.one(SpawnPointBoundingBoxComponent.class).get())) {
-			SpawnPointComponent spawnPointC = spawnPointE.getComponent(SpawnPointComponent.class);
+			SpawnPointComponent spawnPointC = spawnPointM.get(spawnPointE);
 			if (Objects.equals(playerSpawnPointC.name, spawnPointC.name)) {
-				SpawnPointBoundingBoxComponent spawnPointBboxC
-						= spawnPointE.getComponent(SpawnPointBoundingBoxComponent.class);
+				SpawnPointBoundingBoxComponent spawnPointBboxC = spawnPointbboxM.get(spawnPointE);
 				Rectangle spawnPointBbox = spawnPointBboxC.bbox;
 
 				playerBbox.x = spawnPointBbox.x;
