@@ -7,8 +7,8 @@ import com.igrmm.igt.components.StatisticsComponent;
 public class TimeTrackingSystem extends EntitySystem {
 	private final StatisticsComponent playerStatisticsC;
 
-	public TimeTrackingSystem(Entity playerEntity) {
-		playerStatisticsC = playerEntity.getComponent(StatisticsComponent.class);
+	public TimeTrackingSystem(Entity playerE) {
+		playerStatisticsC = playerE.getComponent(StatisticsComponent.class);
 	}
 
 	@Override
