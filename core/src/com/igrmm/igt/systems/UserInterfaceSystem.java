@@ -15,8 +15,8 @@ public class UserInterfaceSystem extends EntitySystem implements Disposable {
 	private boolean rightPressed = false;
 	private boolean leftPressed = false;
 
-	public UserInterfaceSystem(Entity playerEntity) {
-		final MovementComponent playerMovC = playerEntity.getComponent(MovementComponent.class);
+	public UserInterfaceSystem(Entity playerE) {
+		final MovementComponent playerMovC = playerE.getComponent(MovementComponent.class);
 		stage = new Stage();
 		Gdx.input.setInputProcessor(stage);
 		stage.addListener(new InputListener() {

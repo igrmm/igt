@@ -14,10 +14,7 @@ import com.igrmm.igt.Save;
 import com.igrmm.igt.components.MapComponent;
 import com.igrmm.igt.factories.PlayerFactory;
 import com.igrmm.igt.factories.TiledMapEntityFactory;
-import com.igrmm.igt.systems.PhysicsSystem;
-import com.igrmm.igt.systems.RenderingSystem;
-import com.igrmm.igt.systems.TimeTrackingSystem;
-import com.igrmm.igt.systems.UserInterfaceSystem;
+import com.igrmm.igt.systems.*;
 
 public class GameScreen extends ScreenAdapter {
 	private final Engine engine;
@@ -30,10 +27,12 @@ public class GameScreen extends ScreenAdapter {
 		Engine engine = new PooledEngine();
 		Assets assets = game.assets;
 		Save save = assets.getSave();
+
+		//load tiledmap using save
 		MapComponent mapC = save.mapC;
 		TiledMap tiledMap = assets.getTiledMap(mapC.name);
 
-		//Get entities from tiled map
+		//get entities from tiled map
 		MapGroupLayer objectsLayer = (MapGroupLayer) tiledMap.getLayers().get("objects");
 		for (MapLayer mapLayer : objectsLayer.getLayers()) {
 			for (MapObject mapObject : mapLayer.getObjects()) {
@@ -41,11 +40,14 @@ public class GameScreen extends ScreenAdapter {
 			}
 		}
 
-		Entity playerEntity = PlayerFactory.createPlayer(engine, assets);
-		engine.addSystem(new UserInterfaceSystem(playerEntity));
+		Entity playerE = PlayerFactory.createPlayer(engine, assets);
+
+		//create systems
+		engine.addSystem(new UserInterfaceSystem(playerE));
 		engine.addSystem(new PhysicsSystem());
 		engine.addSystem(new RenderingSystem(tiledMap));
-		engine.addSystem(new TimeTrackingSystem(playerEntity));
+		engine.addSystem(new TimeTrackingSystem(playerE));
+
 		return new GameScreen(engine);
 	}
 

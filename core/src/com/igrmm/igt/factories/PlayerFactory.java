@@ -17,26 +17,26 @@ import java.util.Objects;
 
 public class PlayerFactory {
 	public static Entity createPlayer(Engine engine, Assets assets) {
-		Entity playerEntity = engine.createEntity();
-		engine.addEntity(playerEntity);
+		Entity playerE = engine.createEntity();
+		engine.addEntity(playerE);
 		Save save = assets.getSave();
 
 		//Components dependencies
 		AsepriteAnimation asepriteAnimation = assets.getAsepriteAnimation("player");
 
 		//Default components
-		playerEntity.add(new BoundingBoxComponent());
-		playerEntity.add(new AnimationComponent(asepriteAnimation));
-		playerEntity.add(new MovementComponent());
+		playerE.add(new BoundingBoxComponent());
+		playerE.add(new AnimationComponent(asepriteAnimation));
+		playerE.add(new MovementComponent());
 
 		//Serializable components
-		playerEntity.add(save.statisticsC);
-		playerEntity.add(save.spawnPointC);
-		playerEntity.add(save.mapC);
+		playerE.add(save.statisticsC);
+		playerE.add(save.spawnPointC);
+		playerE.add(save.mapC);
 
 		//Tweak numbers
-		MovementComponent playerMovC = playerEntity.getComponent(MovementComponent.class);
-		AnimationComponent playerAnimationC = playerEntity.getComponent(AnimationComponent.class);
+		MovementComponent playerMovC = playerE.getComponent(MovementComponent.class);
+		AnimationComponent playerAnimationC = playerE.getComponent(AnimationComponent.class);
 
 		playerAnimationC.currentAnimation = "idle_right";
 		playerAnimationC.offset = 16f;
@@ -45,8 +45,8 @@ public class PlayerFactory {
 		playerMovC.friction = 1080f;
 
 		//make player spawn at saved spawn point
-		SpawnPointComponent playerSpawnPointC = playerEntity.getComponent(SpawnPointComponent.class);
-		BoundingBoxComponent playerBboxC = playerEntity.getComponent(BoundingBoxComponent.class);
+		SpawnPointComponent playerSpawnPointC = playerE.getComponent(SpawnPointComponent.class);
+		BoundingBoxComponent playerBboxC = playerE.getComponent(BoundingBoxComponent.class);
 		Rectangle playerBbox = playerBboxC.bbox;
 		for (Entity spawnPointE : engine.getEntitiesFor(Family.one(SpawnPointBoundingBoxComponent.class).get())) {
 			SpawnPointComponent spawnPointC = spawnPointE.getComponent(SpawnPointComponent.class);
@@ -60,6 +60,6 @@ public class PlayerFactory {
 			}
 		}
 
-		return playerEntity;
+		return playerE;
 	}
 }
