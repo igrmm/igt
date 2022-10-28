@@ -42,5 +42,10 @@ public interface EntityFactory {
 		return entity;
 	}
 
-	public Component createComponent(String propertyType, XmlReader.Element componentPropertiesXml);
+	/**
+	 * Override this method if the entity has other components than bounding box.
+	 */
+	public default Component createComponent(String propertyType, XmlReader.Element componentPropertiesXml) {
+		throw new RuntimeException("Component not implemented: " + propertyType);
+	}
 }
