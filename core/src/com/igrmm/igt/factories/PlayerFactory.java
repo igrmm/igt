@@ -10,7 +10,7 @@ import com.igrmm.igt.Assets;
 import com.igrmm.igt.Save;
 import com.igrmm.igt.components.AnimationComponent;
 import com.igrmm.igt.components.SpawnPointComponent;
-import com.igrmm.igt.components.boundingboxes.BoundingBoxComponent;
+import com.igrmm.igt.components.BoundingBoxComponent;
 import com.igrmm.igt.components.MovementComponent;
 
 import java.util.Objects;

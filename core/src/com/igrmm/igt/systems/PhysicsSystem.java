@@ -4,7 +4,7 @@ import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
-import com.igrmm.igt.components.boundingboxes.BoundingBoxComponent;
+import com.igrmm.igt.components.BoundingBoxComponent;
 import com.igrmm.igt.components.MovementComponent;
 
 public class PhysicsSystem extends IteratingSystem {

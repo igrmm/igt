@@ -5,7 +5,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.utils.XmlReader;
-import com.igrmm.igt.components.boundingboxes.BoundingBoxComponent;
+import com.igrmm.igt.components.BoundingBoxComponent;
 
 import java.util.Iterator;
 import java.util.Objects;

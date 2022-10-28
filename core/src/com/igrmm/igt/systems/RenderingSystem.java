@@ -11,7 +11,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.Disposable;
 import com.igrmm.igt.components.AnimationComponent;
-import com.igrmm.igt.components.boundingboxes.BoundingBoxComponent;
+import com.igrmm.igt.components.BoundingBoxComponent;
 
 public class RenderingSystem extends IteratingSystem implements Disposable {
 	private final SpriteBatch batch;
