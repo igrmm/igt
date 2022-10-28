@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.igrmm.igt.components.AnimationComponent;
 import com.igrmm.igt.components.boundingboxes.BoundingBoxComponent;
@@ -18,7 +17,6 @@ public class RenderingSystem extends IteratingSystem implements Disposable {
 	private final SpriteBatch batch;
 	private final OrthographicCamera camera;
 	private final OrthogonalTiledMapRenderer mapRenderer;
-	private final Array<Entity> renderQueue;
 	private final ComponentMapper<AnimationComponent> animationM;
 	private final ComponentMapper<BoundingBoxComponent> bboxM;
 
@@ -27,7 +25,6 @@ public class RenderingSystem extends IteratingSystem implements Disposable {
 		batch = new SpriteBatch();
 		camera = new OrthographicCamera();
 		mapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
-		renderQueue = new Array<>();
 		animationM = ComponentMapper.getFor(AnimationComponent.class);
 		bboxM = ComponentMapper.getFor(BoundingBoxComponent.class);
 		camera.position.x = 16f;
@@ -36,13 +33,12 @@ public class RenderingSystem extends IteratingSystem implements Disposable {
 
 	@Override
 	public void update(float deltaTime) {
-		super.update(deltaTime);
 		camera.update();
 		mapRenderer.setView(camera);
 		mapRenderer.render();
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
-		for (Entity entity : renderQueue) {
+		for (Entity entity : getEntities()) {
 			AnimationComponent animationC = animationM.get(entity);
 			String currentAnimation = animationC.currentAnimation;
 			float offset = animationC.offset;
@@ -52,12 +48,10 @@ public class RenderingSystem extends IteratingSystem implements Disposable {
 			batch.draw(tex, bboxC.bbox.x - offset, bboxC.bbox.y - offset);
 		}
 		batch.end();
-		renderQueue.clear();
 	}
 
 	@Override
 	protected void processEntity(Entity entity, float deltaTime) {
-		renderQueue.add(entity);
 	}
 
 	public void resizeScreen(int width, int height) {
