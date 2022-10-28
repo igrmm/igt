@@ -26,7 +26,7 @@ public class SpawnPointEntityFactory implements EntityFactory {
 				spawnPointC.name = spawnPointNameXml.getAttribute("value", "start");
 			return spawnPointC;
 		}
-		throw new Error("Component not found = " + propertyType);
+		return EntityFactory.super.createComponent(propertyType, componentPropertiesXml);
 	}
 
 	public static class SpawnPointETComponent extends EntityTypeComponent {
