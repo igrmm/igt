@@ -12,7 +12,6 @@ import com.igrmm.igt.components.AnimationComponent;
 import com.igrmm.igt.components.SpawnPointComponent;
 import com.igrmm.igt.components.boundingboxes.BoundingBoxComponent;
 import com.igrmm.igt.components.MovementComponent;
-import com.igrmm.igt.components.boundingboxes.SpawnPointBoundingBoxComponent;
 
 import java.util.Objects;
 
@@ -27,7 +26,6 @@ public class PlayerFactory {
 		ComponentMapper<AnimationComponent> animationM = ComponentMapper.getFor(AnimationComponent.class);
 		ComponentMapper<SpawnPointComponent> spawnPointM = ComponentMapper.getFor(SpawnPointComponent.class);
 		ComponentMapper<BoundingBoxComponent> bboxM = ComponentMapper.getFor(BoundingBoxComponent.class);
-		ComponentMapper<SpawnPointBoundingBoxComponent> spawnPointbboxM = ComponentMapper.getFor(SpawnPointBoundingBoxComponent.class);
 
 		//components dependencies
 		AsepriteAnimation asepriteAnimation = assets.getAsepriteAnimation("player");
@@ -56,10 +54,10 @@ public class PlayerFactory {
 		SpawnPointComponent playerSpawnPointC = spawnPointM.get(playerE);
 		BoundingBoxComponent playerBboxC = bboxM.get(playerE);
 		Rectangle playerBbox = playerBboxC.bbox;
-		for (Entity spawnPointE : engine.getEntitiesFor(Family.one(SpawnPointBoundingBoxComponent.class).get())) {
+		for (Entity spawnPointE : engine.getEntitiesFor(Family.one(SpawnPointEntityFactory.SpawnPointETComponent.class).get())) {
 			SpawnPointComponent spawnPointC = spawnPointM.get(spawnPointE);
 			if (Objects.equals(playerSpawnPointC.name, spawnPointC.name)) {
-				SpawnPointBoundingBoxComponent spawnPointBboxC = spawnPointbboxM.get(spawnPointE);
+				BoundingBoxComponent spawnPointBboxC = bboxM.get(spawnPointE);
 				Rectangle spawnPointBbox = spawnPointBboxC.bbox;
 
 				playerBbox.x = spawnPointBbox.x;
