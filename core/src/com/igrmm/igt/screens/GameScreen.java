@@ -34,9 +34,10 @@ public class GameScreen extends ScreenAdapter {
 
 		//get entities from tiled map
 		MapGroupLayer objectsLayer = (MapGroupLayer) tiledMap.getLayers().get("objects");
+		TiledMapEntityFactory tiledMapEntityFactory = new TiledMapEntityFactory();
 		for (MapLayer mapLayer : objectsLayer.getLayers()) {
 			for (MapObject mapObject : mapLayer.getObjects()) {
-				engine.addEntity(TiledMapEntityFactory.createEntity(mapObject));
+				engine.addEntity(tiledMapEntityFactory.createEntity(mapObject));
 			}
 		}
 
