@@ -6,7 +6,7 @@ import com.badlogic.gdx.maps.MapObject;
 public class TiledMapEntityFactory implements EntityFactory {
 	@Override
 	public Entity createEntity(MapObject mapObject) {
-		String entityType = mapObject.getProperties().get("entitytype", String.class);
+		String entityType = mapObject.getProperties().get("entityType", String.class);
 		switch (entityType) {
 			case "block":
 				BlockEntityFactory blockEntityFactory = new BlockEntityFactory();
