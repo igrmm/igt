@@ -3,18 +3,18 @@ package com.igrmm.igt.systems;
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
-import com.igrmm.igt.components.StatisticsComponent;
+import com.igrmm.igt.factories.PlayerFactory.PlayerETComponent;
 
 public class TimeTrackingSystem extends EntitySystem {
-	private final StatisticsComponent playerStatisticsC;
+	private final PlayerETComponent playerETC;
 
 	public TimeTrackingSystem(Entity playerE) {
-		ComponentMapper<StatisticsComponent> statisticsM = ComponentMapper.getFor(StatisticsComponent.class);
-		playerStatisticsC = statisticsM.get(playerE);
+		ComponentMapper<PlayerETComponent> playerETM = ComponentMapper.getFor(PlayerETComponent.class);
+		playerETC = playerETM.get(playerE);
 	}
 
 	@Override
 	public void update(float deltaTime) {
-		playerStatisticsC.timePlayed += deltaTime;
+		playerETC.timePlayed += deltaTime;
 	}
 }

@@ -33,7 +33,7 @@ public class PlayerFactory {
 		playerE.add(new MovementComponent());
 
 		//serializable components
-		playerE.add(save.statisticsC);
+		playerE.add(save.playerETC);
 		playerE.add(save.spawnPointC);
 		playerE.add(save.mapC);
 
@@ -66,5 +66,6 @@ public class PlayerFactory {
 	}
 
 	public static class PlayerETComponent extends EntityTypeComponent {
+		public float timePlayed = 0f;
 	}
 }
