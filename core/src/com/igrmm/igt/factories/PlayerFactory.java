@@ -8,10 +8,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.igrmm.igt.AsepriteAnimation;
 import com.igrmm.igt.Assets;
 import com.igrmm.igt.Save;
-import com.igrmm.igt.components.AnimationComponent;
-import com.igrmm.igt.components.SpawnPointComponent;
-import com.igrmm.igt.components.BoundingBoxComponent;
-import com.igrmm.igt.components.MovementComponent;
+import com.igrmm.igt.components.*;
 
 import java.util.Objects;
 
@@ -66,5 +63,8 @@ public class PlayerFactory {
 		}
 
 		return playerE;
+	}
+
+	public static class PlayerETComponent extends EntityTypeComponent {
 	}
 }
