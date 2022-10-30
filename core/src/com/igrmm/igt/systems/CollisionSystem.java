@@ -37,6 +37,7 @@ public class CollisionSystem extends IteratingSystem {
 			collision.resolve();
 			Pools.free(collision);
 		}
+		collisions.clear();
 
 		//make mobile entities move after resolving collisions
 		MovementComponent movC = movementM.get(entity);
