@@ -31,6 +31,7 @@ public class PlayerFactory {
 		playerE.add(new BoundingBoxComponent());
 		playerE.add(new AnimationComponent(asepriteAnimation));
 		playerE.add(new MovementComponent());
+		playerE.add(new BroadPhaseCollisionComponent());
 
 		//serializable components
 		playerE.add(save.playerETC);
