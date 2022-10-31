@@ -10,12 +10,12 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Disposable;
 import com.igrmm.igt.components.MovementComponent;
 
-public class UserInterfaceSystem extends EntitySystem implements Disposable {
+public class PlayerSystem extends EntitySystem implements Disposable {
 	private final Stage stage;
 	private boolean rightPressed = false;
 	private boolean leftPressed = false;
 
-	public UserInterfaceSystem(Entity playerE) {
+	public PlayerSystem(Entity playerE) {
 		final MovementComponent playerMovC = playerE.getComponent(MovementComponent.class);
 		stage = new Stage();
 		Gdx.input.setInputProcessor(stage);

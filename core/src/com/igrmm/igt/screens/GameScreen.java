@@ -44,7 +44,7 @@ public class GameScreen extends ScreenAdapter {
 		Entity playerE = PlayerFactory.createPlayer(engine, assets);
 
 		//create systems
-		engine.addSystem(new UserInterfaceSystem(playerE));
+		engine.addSystem(new PlayerSystem(playerE));
 		engine.addSystem(new PhysicsSystem());
 		engine.addSystem(new RenderingSystem(tiledMap));
 		engine.addSystem(new TimeTrackingSystem(playerE));
@@ -69,7 +69,7 @@ public class GameScreen extends ScreenAdapter {
 	public void dispose() {
 		RenderingSystem renderingSystem = engine.getSystem(RenderingSystem.class);
 		renderingSystem.dispose();
-		UserInterfaceSystem userInterfaceSystem = engine.getSystem(UserInterfaceSystem.class);
-		userInterfaceSystem.dispose();
+		PlayerSystem playerSystem = engine.getSystem(PlayerSystem.class);
+		playerSystem.dispose();
 	}
 }
