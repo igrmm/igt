@@ -1,5 +1,6 @@
 package com.igrmm.igt.systems;
 
+import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.gdx.Gdx;
@@ -9,13 +10,17 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Disposable;
 import com.igrmm.igt.components.MovementComponent;
+import com.igrmm.igt.factories.PlayerFactory.PlayerETComponent;
 
 public class PlayerSystem extends EntitySystem implements Disposable {
+	private final PlayerETComponent playerETC;
 	private final Stage stage;
 	private boolean rightPressed = false;
 	private boolean leftPressed = false;
 
 	public PlayerSystem(Entity playerE) {
+		ComponentMapper<PlayerETComponent> playerETM = ComponentMapper.getFor(PlayerETComponent.class);
+		playerETC = playerETM.get(playerE);
 		final MovementComponent playerMovC = playerE.getComponent(MovementComponent.class);
 		stage = new Stage();
 		Gdx.input.setInputProcessor(stage);
@@ -55,6 +60,9 @@ public class PlayerSystem extends EntitySystem implements Disposable {
 	@Override
 	public void update(float deltaTime) {
 		stage.act();
+
+		//track time played
+		playerETC.timePlayed += deltaTime;
 	}
 
 	@Override
