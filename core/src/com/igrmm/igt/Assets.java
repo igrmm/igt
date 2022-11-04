@@ -5,6 +5,11 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader;
+import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
+import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader.FreeTypeFontLoaderParameter;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
@@ -17,6 +22,7 @@ public class Assets {
 	public static final String MAPS_DIR = "tiled/maps/";
 	public static final String TEXTURES_DIR = "textures/";
 	public static final String ANIMATIONS_DIR = "animations/";
+	public static final String FONTS_DIR = "fonts/";
 	public static final String SAVE_PATH = "save.json";
 
 	private final AssetManager assetManager;
@@ -28,6 +34,8 @@ public class Assets {
 		assetManager = new AssetManager();
 		assetManager.setLoader(TiledMap.class, new IgtTmxMapLoader(new InternalFileHandleResolver()));
 		assetManager.setLoader(JsonValue.class, new JsonLoader(new InternalFileHandleResolver()));
+		assetManager.setLoader(FreeTypeFontGenerator.class, new FreeTypeFontGeneratorLoader(new InternalFileHandleResolver()));
+		assetManager.setLoader(BitmapFont.class, new FreetypeFontLoader(new InternalFileHandleResolver()));
 		asepriteAnimations = new HashMap<>();
 	}
 
@@ -56,6 +64,15 @@ public class Assets {
 			animationJsonPaths.add(animationFileHandle.path());
 		}
 
+		//load fonts
+		FileHandle fontsDirHandle = Gdx.files.internal(FONTS_DIR);
+		for (FileHandle fontFileHandle : fontsDirHandle.list()) {
+			FreeTypeFontLoaderParameter parms = new FreeTypeFontLoaderParameter();
+			parms.fontFileName = fontFileHandle.path();
+			parms.fontParameters.size = 14;
+			assetManager.load(fontFileHandle.path(), BitmapFont.class, parms);
+		}
+
 		assetManager.finishLoading();
 
 		//make animations from json
@@ -79,6 +96,13 @@ public class Assets {
 	 */
 	public AsepriteAnimation getAsepriteAnimation(String asepriteAnimationName) {
 		return asepriteAnimations.get(ANIMATIONS_DIR + asepriteAnimationName + ".json");
+	}
+
+	/**
+	 * @param fontName file name only, without extension.
+	 */
+	public BitmapFont getFont(String fontName) {
+		return assetManager.get(FONTS_DIR + fontName + ".ttf", BitmapFont.class);
 	}
 
 	public Save getSave() {
