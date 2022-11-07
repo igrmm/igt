@@ -44,7 +44,7 @@ public class GameScreen extends ScreenAdapter {
 		Entity playerE = PlayerFactory.createPlayer(engine, assets);
 
 		//create systems
-		engine.addSystem(new PlayerSystem(playerE));
+		engine.addSystem(new PlayerSystem(playerE, assets));
 		engine.addSystem(new PhysicsSystem());
 		engine.addSystem(new RenderingSystem(tiledMap));
 		engine.addSystem(new BlockSystem(playerE));
@@ -62,6 +62,8 @@ public class GameScreen extends ScreenAdapter {
 	public void resize(int width, int height) {
 		RenderingSystem renderingSystem = engine.getSystem(RenderingSystem.class);
 		renderingSystem.resizeScreen(width, height);
+		PlayerSystem playerSystem = engine.getSystem(PlayerSystem.class);
+		playerSystem.resizeScreen(width, height);
 	}
 
 	@Override

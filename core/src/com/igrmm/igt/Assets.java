@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader;
 import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
 import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader.FreeTypeFontLoaderParameter;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
@@ -73,6 +74,9 @@ public class Assets {
 			assetManager.load(fontFileHandle.path(), BitmapFont.class, parms);
 		}
 
+		//load ui skin
+		assetManager.load("ui/uiskin.json", Skin.class);
+
 		assetManager.finishLoading();
 
 		//make animations from json
@@ -103,6 +107,10 @@ public class Assets {
 	 */
 	public BitmapFont getFont(String fontName) {
 		return assetManager.get(FONTS_DIR + fontName + ".ttf", BitmapFont.class);
+	}
+
+	public Skin getSkin() {
+		return assetManager.get("ui/uiskin.json", Skin.class);
 	}
 
 	public Save getSave() {

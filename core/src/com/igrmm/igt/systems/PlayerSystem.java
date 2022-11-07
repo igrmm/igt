@@ -9,6 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Disposable;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.igrmm.igt.Assets;
 import com.igrmm.igt.components.MovementComponent;
 import com.igrmm.igt.factories.PlayerFactory.PlayerETComponent;
 
@@ -18,11 +20,11 @@ public class PlayerSystem extends EntitySystem implements Disposable {
 	private boolean rightPressed = false;
 	private boolean leftPressed = false;
 
-	public PlayerSystem(Entity playerE) {
+	public PlayerSystem(Entity playerE, Assets assets) {
 		ComponentMapper<PlayerETComponent> playerETM = ComponentMapper.getFor(PlayerETComponent.class);
 		playerETC = playerETM.get(playerE);
 		final MovementComponent playerMovC = playerE.getComponent(MovementComponent.class);
-		stage = new Stage();
+		stage = new Stage(new ScreenViewport());
 		Gdx.input.setInputProcessor(stage);
 		stage.addListener(new InputListener() {
 			public boolean keyDown(InputEvent event, int keycode) {
@@ -60,9 +62,14 @@ public class PlayerSystem extends EntitySystem implements Disposable {
 	@Override
 	public void update(float deltaTime) {
 		stage.act();
+		stage.draw();
 
 		//track time played
 		playerETC.timePlayed += deltaTime;
+	}
+
+	public void resizeScreen(int width, int height) {
+		stage.getViewport().update(width, height, true);
 	}
 
 	@Override
