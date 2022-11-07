@@ -8,6 +8,8 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.igrmm.igt.Assets;
@@ -75,5 +77,18 @@ public class PlayerSystem extends EntitySystem implements Disposable {
 	@Override
 	public void dispose() {
 		stage.dispose();
+	}
+
+	private static class GameButton extends Button {
+		boolean over;
+
+		GameButton(Skin skin, String styleName) {
+			super(skin, styleName);
+		}
+
+		@Override
+		public boolean isOver() {
+			return over;
+		}
 	}
 }
