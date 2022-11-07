@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Rectangle;
 import com.igrmm.igt.AsepriteAnimation;
 import com.igrmm.igt.Assets;
@@ -68,5 +69,7 @@ public class PlayerFactory {
 
 	public static class PlayerETComponent extends EntityTypeComponent {
 		public float timePlayed = 0f;
+		public int rightKey = Input.Keys.D;
+		public int leftKey = Input.Keys.A;
 	}
 }

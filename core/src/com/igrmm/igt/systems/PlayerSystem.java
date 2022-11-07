@@ -4,7 +4,6 @@ import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -33,14 +32,14 @@ public class PlayerSystem extends EntitySystem implements Disposable {
 		Gdx.input.setInputProcessor(stage);
 		stage.addListener(new InputListener() {
 			public boolean keyDown(InputEvent event, int keycode) {
-				if (keycode == Input.Keys.A) setLeftInput(true);
-				if (keycode == Input.Keys.D) setRightInput(true);
+				if (keycode == playerETC.leftKey) setLeftInput(true);
+				if (keycode == playerETC.rightKey) setRightInput(true);
 				return true;
 			}
 
 			public boolean keyUp(InputEvent event, int keycode) {
-				if (keycode == Input.Keys.A) setLeftInput(false);
-				if (keycode == Input.Keys.D) setRightInput(false);
+				if (keycode == playerETC.leftKey) setLeftInput(false);
+				if (keycode == playerETC.rightKey) setRightInput(false);
 				return true;
 			}
 		});
