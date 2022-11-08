@@ -42,7 +42,10 @@ public class PlayerFactory {
 		//tweak numbers
 		MovementComponent playerMovC = movementM.get(playerE);
 		AnimationComponent playerAnimationC = animationM.get(playerE);
+		BoundingBoxComponent playerBboxC = bboxM.get(playerE);
+		Rectangle playerBbox = playerBboxC.bbox;
 
+		playerBbox.width = playerBbox.height = 32f;
 		playerAnimationC.currentAnimation = "idle_right";
 		playerAnimationC.offset = 16f;
 		playerMovC.maxSpeed = 240f;
@@ -51,8 +54,6 @@ public class PlayerFactory {
 
 		//make player spawn at saved spawn point
 		SpawnPointComponent playerSpawnPointC = spawnPointM.get(playerE);
-		BoundingBoxComponent playerBboxC = bboxM.get(playerE);
-		Rectangle playerBbox = playerBboxC.bbox;
 		for (Entity spawnPointE : engine.getEntitiesFor(Family.one(SpawnPointEntityFactory.SpawnPointETComponent.class).get())) {
 			SpawnPointComponent spawnPointC = spawnPointM.get(spawnPointE);
 			if (Objects.equals(playerSpawnPointC.name, spawnPointC.name)) {
