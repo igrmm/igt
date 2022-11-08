@@ -1,6 +1,8 @@
 package com.igrmm.igt;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.igrmm.igt.screens.GameScreen;
 import com.igrmm.igt.screens.LoadingScreen;
@@ -11,6 +13,11 @@ public class Igt extends Game {
 
 	@Override
 	public void create() {
+		//set cursor image
+		Pixmap pm = new Pixmap(Gdx.files.internal("ui/cursor.png"));
+		Gdx.graphics.setCursor(Gdx.graphics.newCursor(pm, 0, 0));
+		pm.dispose();
+
 		setScreen(new LoadingScreen(this));
 	}
 
