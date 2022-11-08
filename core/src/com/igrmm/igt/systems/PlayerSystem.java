@@ -37,6 +37,7 @@ public class PlayerSystem extends EntitySystem implements Disposable {
 			public boolean keyDown(InputEvent event, int keycode) {
 				if (keycode == playerETC.leftKey) setLeftInput(true);
 				if (keycode == playerETC.rightKey) setRightInput(true);
+				if (keycode == playerETC.jumpKey) setJumpInput(true);
 				if (keycode == Input.Keys.ESCAPE) setPauseInput(true);
 				return true;
 			}
@@ -44,6 +45,7 @@ public class PlayerSystem extends EntitySystem implements Disposable {
 			public boolean keyUp(InputEvent event, int keycode) {
 				if (keycode == playerETC.leftKey) setLeftInput(false);
 				if (keycode == playerETC.rightKey) setRightInput(false);
+				if (keycode == playerETC.jumpKey) setJumpInput(false);
 				if (keycode == Input.Keys.ESCAPE) setPauseInput(false);
 				return true;
 			}
@@ -102,9 +104,13 @@ public class PlayerSystem extends EntitySystem implements Disposable {
 		if (pressed) {
 			pausePressed = true;
 		} else if (pausePressed) {
-			pausePressed = false;
+			setRightInput(setLeftInput(setJumpInput(pausePressed = false)));
 			game.setScreen(new PauseScreen(game, stage));
 		}
+	}
+
+	public boolean setJumpInput(boolean pressed) {
+		return playerMovC.jumpIntention = pressed;
 	}
 
 	private void addOnScreenController(Table table, Skin skin) {
@@ -120,11 +126,11 @@ public class PlayerSystem extends EntitySystem implements Disposable {
 		table.add(leftButton).width(buttonSize).height(buttonSize).pad(buttonPad);
 		leftButton.addListener(new InputListener() {
 			public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-				leftButton.over = setLeftInput(true);
+				setLeftInput(leftButton.over = true);
 			}
 
 			public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
-				leftButton.over = setLeftInput(false);
+				setLeftInput(leftButton.over = false);
 			}
 		});
 
@@ -132,11 +138,11 @@ public class PlayerSystem extends EntitySystem implements Disposable {
 		table.add(rightButton).width(buttonSize).height(buttonSize);
 		rightButton.addListener(new InputListener() {
 			public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-				rightButton.over = setRightInput(true);
+				setRightInput(rightButton.over = true);
 			}
 
 			public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
-				rightButton.over = setRightInput(false);
+				setRightInput(rightButton.over = false);
 			}
 		});
 
@@ -159,11 +165,11 @@ public class PlayerSystem extends EntitySystem implements Disposable {
 		table.add(jumpButton).width(buttonSize).height(buttonSize).pad(buttonPad);
 		jumpButton.addListener(new InputListener() {
 			public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-				jumpButton.over = true;
+				setJumpInput(jumpButton.over = true);
 			}
 
 			public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
-				jumpButton.over = false;
+				setJumpInput(jumpButton.over = false);
 			}
 		});
 	}

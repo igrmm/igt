@@ -11,5 +11,13 @@ public class MovementComponent implements Component {
 	public float acceleration = 0f;
 	public float friction = 0f;
 	public final Vector2 speed = new Vector2();
+	public boolean jumping = false;
+	public boolean grounded = false;
+	public float jumpTimer = 0f;
+	public float jumpTime = 0f;
+	public float jumpForce = 0f;
+	public float gravity = 0f;
+
 	public int movementSignalIntention = 0;
+	public boolean jumpIntention = false;
 }

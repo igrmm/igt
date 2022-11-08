@@ -72,5 +72,6 @@ public class PlayerFactory {
 		public float timePlayed = 0f;
 		public int rightKey = Input.Keys.D;
 		public int leftKey = Input.Keys.A;
+		public int jumpKey = Input.Keys.SPACE;
 	}
 }
