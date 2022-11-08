@@ -32,6 +32,17 @@ public class PauseScreen extends ScreenAdapter {
 		Gdx.input.setInputProcessor(stage);
 		stage.addListener(new InputListener() {
 			@Override
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				setPauseInput(true);
+				return true;
+			}
+
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				setPauseInput(false);
+			}
+
+			@Override
 			public boolean keyDown(InputEvent event, int keycode) {
 				if (keycode == Input.Keys.ESCAPE) setPauseInput(true);
 				return true;
