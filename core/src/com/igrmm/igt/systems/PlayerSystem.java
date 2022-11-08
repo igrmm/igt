@@ -142,6 +142,30 @@ public class PlayerSystem extends EntitySystem implements Disposable {
 
 		// empty cell
 		table.add(new Actor()).expandX();
+
+		GameButton actionButton = new GameButton(skin, "action-button");
+		table.add(actionButton).width(buttonSize).height(buttonSize);
+		actionButton.addListener(new InputListener() {
+			public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+				actionButton.over = true;
+			}
+
+			public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+				actionButton.over = false;
+			}
+		});
+
+		GameButton jumpButton = new GameButton(skin, "jump-button");
+		table.add(jumpButton).width(buttonSize).height(buttonSize).pad(buttonPad);
+		jumpButton.addListener(new InputListener() {
+			public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+				jumpButton.over = true;
+			}
+
+			public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+				jumpButton.over = false;
+			}
+		});
 	}
 
 	private static class GameButton extends Button {
