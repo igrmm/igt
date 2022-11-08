@@ -1,9 +1,9 @@
 package com.igrmm.igt.systems;
 
-import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -13,20 +13,23 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.igrmm.igt.Assets;
+import com.igrmm.igt.Igt;
 import com.igrmm.igt.components.MovementComponent;
 import com.igrmm.igt.factories.PlayerFactory.PlayerETComponent;
+import com.igrmm.igt.screens.PauseScreen;
 
 public class PlayerSystem extends EntitySystem implements Disposable {
+	private final Igt game;
 	private final PlayerETComponent playerETC;
 	private final MovementComponent playerMovC;
 	private final Stage stage;
 	private boolean rightPressed = false;
 	private boolean leftPressed = false;
+	private boolean pausePressed = false;
 
-	public PlayerSystem(Entity playerE, Assets assets) {
-		ComponentMapper<PlayerETComponent> playerETM = ComponentMapper.getFor(PlayerETComponent.class);
-		playerETC = playerETM.get(playerE);
+	public PlayerSystem(Entity playerE, Igt game) {
+		this.game = game;
+		playerETC = playerE.getComponent(PlayerETComponent.class);
 		playerMovC = playerE.getComponent(MovementComponent.class);
 		stage = new Stage(new ScreenViewport());
 		Gdx.input.setInputProcessor(stage);
@@ -34,18 +37,20 @@ public class PlayerSystem extends EntitySystem implements Disposable {
 			public boolean keyDown(InputEvent event, int keycode) {
 				if (keycode == playerETC.leftKey) setLeftInput(true);
 				if (keycode == playerETC.rightKey) setRightInput(true);
+				if (keycode == Input.Keys.ESCAPE) setPauseInput(true);
 				return true;
 			}
 
 			public boolean keyUp(InputEvent event, int keycode) {
 				if (keycode == playerETC.leftKey) setLeftInput(false);
 				if (keycode == playerETC.rightKey) setRightInput(false);
+				if (keycode == Input.Keys.ESCAPE) setPauseInput(false);
 				return true;
 			}
 		});
 
 		//add on screen controller
-		Skin skin = assets.getSkin();
+		Skin skin = game.assets.getSkin();
 		Table table = new Table();
 		table.setFillParent(true);
 		table.bottom();
@@ -91,6 +96,15 @@ public class PlayerSystem extends EntitySystem implements Disposable {
 			playerMovC.movementSignalIntention = leftPressed ? MovementComponent.LEFT_SIGNAL : 0;
 		}
 		return rightPressed;
+	}
+
+	public void setPauseInput(boolean pressed) {
+		if (pressed) {
+			pausePressed = true;
+		} else if (pausePressed) {
+			pausePressed = false;
+			game.setScreen(new PauseScreen(game, stage));
+		}
 	}
 
 	private void addOnScreenController(Table table, Skin skin) {

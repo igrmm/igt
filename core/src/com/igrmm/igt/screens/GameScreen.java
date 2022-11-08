@@ -44,7 +44,7 @@ public class GameScreen extends ScreenAdapter {
 		Entity playerE = PlayerFactory.createPlayer(engine, assets);
 
 		//create systems
-		engine.addSystem(new PlayerSystem(playerE, assets));
+		engine.addSystem(new PlayerSystem(playerE, game));
 		engine.addSystem(new PhysicsSystem());
 		engine.addSystem(new RenderingSystem(tiledMap));
 		engine.addSystem(new BlockSystem(playerE));
