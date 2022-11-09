@@ -20,5 +20,10 @@ com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
 		down: jump-button-down
 		over: jump-button-down
 	}
+	pause-button: {
+		up: pause-button-up
+		down: pause-button-down
+		over: pause-button-down
+	}
 }
 }

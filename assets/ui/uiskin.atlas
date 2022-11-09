@@ -1,25 +1,26 @@
 
 uiskin.png
-size: 64, 64
+size: 128, 128
 format: RGBA8888
+filter: Linear, Linear
 repeat: none
 action-button-down
   rotate: false
-  xy: 1, 37
+  xy: 55, 55
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 action-button-up
   rotate: false
-  xy: 1, 19
+  xy: 37, 37
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 jump-button-down
   rotate: false
-  xy: 19, 37
+  xy: 19, 19
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
@@ -33,28 +34,42 @@ jump-button-up
   index: -1
 left-button-down
   rotate: false
-  xy: 19, 19
+  xy: 37, 55
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 left-button-up
   rotate: false
-  xy: 37, 37
+  xy: 19, 37
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+pause-button-down
+  rotate: false
+  xy: 1, 37
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+pause-button-up
+  rotate: false
+  xy: 1, 55
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 right-button-down
   rotate: false
-  xy: 19, 1
+  xy: 1, 19
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 right-button-up
   rotate: false
-  xy: 37, 19
+  xy: 19, 55
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
