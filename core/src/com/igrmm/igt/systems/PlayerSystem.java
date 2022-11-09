@@ -8,9 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.igrmm.igt.Igt;
@@ -23,6 +21,7 @@ public class PlayerSystem extends EntitySystem implements Disposable {
 	private final PlayerETComponent playerETC;
 	private final MovementComponent playerMovC;
 	private final Stage stage;
+	private final Label debugLabel;
 	private boolean rightPressed = false;
 	private boolean leftPressed = false;
 	private boolean pausePressed = false;
@@ -51,17 +50,70 @@ public class PlayerSystem extends EntitySystem implements Disposable {
 			}
 		});
 
-		//add on screen controller
+		/*
+
+		  MAKE GUI
+
+		  |-------------|
+		  | upper table |
+		  |-------------|
+		  | empty cell  |
+		  |-------------|
+		  | lower table |
+		  |-------------|
+
+		*/
+
+		Table root = new Table();
+		stage.addActor(root);
+		root.setFillParent(true);
 		Skin skin = game.assets.getSkin();
-		Table table = new Table();
-		table.setFillParent(true);
-		table.bottom();
-		addOnScreenController(table, skin);
-		stage.addActor(table);
+
+		//upper table
+		Table upperTable = new Table();
+		root.add(upperTable).fill();
+		Label.LabelStyle labelStyle = new Label.LabelStyle();
+		labelStyle.font = game.assets.getFont("dogicapixel");
+		debugLabel = new Label("", labelStyle);
+		upperTable.add(debugLabel).pad(20f);
+		upperTable.add(new Actor()).expandX();
+		Button pauseButton = new Button(skin, "pause-button");
+		pauseButton.addListener(new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				setPauseInput(true);
+				return true;
+			}
+
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				setPauseInput(false);
+			}
+		});
+		upperTable.add(pauseButton).size(50f).pad(20f);
+		root.row();
+
+		//empty cell
+		root.add(new Actor()).expand(); //set all cells to max size, pushes things to edges with fill() method
+		root.row();
+
+		//lower table
+		Table lowerTable = new Table();
+		root.add(lowerTable).fill();
+		addOnScreenController(lowerTable, skin);
 	}
 
 	@Override
 	public void update(float deltaTime) {
+
+		debugLabel.setText("FPS: " + Gdx.graphics.getFramesPerSecond() +
+				"\n\nppcx: " + Gdx.graphics.getPpiX() +
+				"\n\nppcy: " + Gdx.graphics.getPpiY() +
+				"\n\ndensity: " + Gdx.graphics.getDensity() +
+				"\n\n" + Gdx.graphics.getDisplayMode().toString() +
+				"\n\nwxh: " + Gdx.graphics.getWidth() + "x" + Gdx.graphics.getHeight() +
+				"\n\ndelta: " + deltaTime);
+
 		stage.act();
 		stage.draw();
 
@@ -146,7 +198,7 @@ public class PlayerSystem extends EntitySystem implements Disposable {
 			}
 		});
 
-		// empty cell
+		//empty cell
 		table.add(new Actor()).expandX();
 
 		GameButton actionButton = new GameButton(skin, "action-button");
