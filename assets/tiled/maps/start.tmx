@@ -9,7 +9,7 @@
  </layer>
  <group id="2" name="objects">
   <objectgroup id="4" name="spawn-point">
-   <object id="48" name="start" class="spawn-point" gid="36" x="40" y="768" width="32" height="32">
+   <object id="48" name="start" class="spawn-point" gid="36" x="88" y="704" width="32" height="32">
     <properties>
      <property name="spawnPointComponent" type="class" propertytype="spawnPointComponent">
       <properties>
