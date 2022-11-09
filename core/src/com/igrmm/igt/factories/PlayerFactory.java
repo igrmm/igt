@@ -51,6 +51,9 @@ public class PlayerFactory {
 		playerMovC.maxSpeed = 240f;
 		playerMovC.acceleration = 1080f;
 		playerMovC.friction = 1080f;
+		playerMovC.gravity = -1800.0f;
+		playerMovC.jumpForce = 450.0f;
+		playerMovC.jumpTime = 0.2f;
 
 		//make player spawn at saved spawn point
 		SpawnPointComponent playerSpawnPointC = spawnPointM.get(playerE);
