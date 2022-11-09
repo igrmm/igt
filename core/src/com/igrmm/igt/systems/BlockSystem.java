@@ -102,7 +102,7 @@ public class BlockSystem extends IteratingSystem {
 
 				if (collisionArea.overlaps(blockBbox)) {
 					BlockCollision collision = Pools.obtain(BlockCollision.class);
-					collision.init(entity, blockE);
+					collision.init(movC, entity, blockE);
 					bPhaseColC.collisions.add(collision);
 				}
 			}
@@ -110,19 +110,27 @@ public class BlockSystem extends IteratingSystem {
 	}
 
 	private static class BlockCollision extends CollisionMaybe {
-		@Override
-		public void init(Entity dynamicEntity, Entity staticEntity) {
+		MovementComponent movC;
+
+		public void init(MovementComponent movC, Entity dynamicEntity, Entity staticEntity) {
 			super.init(dynamicEntity, staticEntity);
+			this.movC = movC;
 		}
 
 		@Override
 		public void reset() {
 			super.reset();
+			movC = null;
 		}
 
 		@Override
 		public boolean resolve() {
-			return super.resolve();
+			if (super.resolve()) {
+				if (getNormalY() > 0) {
+					movC.grounded = true;
+				}
+				return true;
+			} else return false;
 		}
 	}
 }
