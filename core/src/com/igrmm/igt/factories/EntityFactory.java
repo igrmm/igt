@@ -16,7 +16,8 @@ public interface EntityFactory {
 		MapProperties mapObjectProperties = mapObject.getProperties();
 
 		//get bounding box component
-		BoundingBoxComponent bboxC = new BoundingBoxComponent(
+		BoundingBoxComponent bboxC = new BoundingBoxComponent();
+		bboxC.bbox.set(
 				mapObjectProperties.get("x", Float.class),
 				mapObjectProperties.get("y", Float.class),
 				mapObjectProperties.get("width", Float.class),
