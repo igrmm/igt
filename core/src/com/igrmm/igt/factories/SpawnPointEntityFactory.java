@@ -2,6 +2,7 @@ package com.igrmm.igt.factories;
 
 import com.badlogic.ashley.core.Component;
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.utils.XmlReader;
 import com.igrmm.igt.components.EntityTypeComponent;
@@ -21,9 +22,13 @@ public class SpawnPointEntityFactory implements EntityFactory {
 	public Component createComponent(String propertyType, XmlReader.Element componentPropertiesXml) {
 		if ("spawnPointComponent".equals(propertyType)) {
 			SpawnPointComponent spawnPointC = new SpawnPointComponent();
-			XmlReader.Element spawnPointNameXml = componentPropertiesXml.getChild(0);
-			if (Objects.equals(spawnPointNameXml.getAttribute("name"), "name"))
-				spawnPointC.name = spawnPointNameXml.getAttribute("value", "start");
+			try {
+				XmlReader.Element spawnPointNameXml = componentPropertiesXml.getChild(0);
+				if (Objects.equals(spawnPointNameXml.getAttribute("name"), "name"))
+					spawnPointC.name = spawnPointNameXml.getAttribute("value", "start");
+			} catch (Exception e) {
+				Gdx.app.log("SPAWN POINT COMPONENT", "Name attribute not set.", e);
+			}
 			return spawnPointC;
 		}
 		return EntityFactory.super.createComponent(propertyType, componentPropertiesXml);
