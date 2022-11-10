@@ -5,8 +5,11 @@ import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.igrmm.igt.AsepriteAnimation;
 import com.igrmm.igt.Assets;
 import com.igrmm.igt.Save;
@@ -20,57 +23,62 @@ public class PlayerFactory {
 		engine.addEntity(playerE);
 		Save save = assets.getSave();
 
-		//component mappers
-		ComponentMapper<MovementComponent> movementM = ComponentMapper.getFor(MovementComponent.class);
-		ComponentMapper<AnimationComponent> animationM = ComponentMapper.getFor(AnimationComponent.class);
-		ComponentMapper<SpawnPointComponent> spawnPointM = ComponentMapper.getFor(SpawnPointComponent.class);
-		ComponentMapper<BoundingBoxComponent> bboxM = ComponentMapper.getFor(BoundingBoxComponent.class);
-
-		//components dependencies
-		AsepriteAnimation asepriteAnimation = assets.getAsepriteAnimation("player");
-		Label.LabelStyle labelStyle = new Label.LabelStyle();
-		labelStyle.font = assets.getFont("dogicapixel");
-		Label debugLabel = new Label("", labelStyle);
-
 		//default components
-		playerE.add(new BoundingBoxComponent());
-		playerE.add(new AnimationComponent(asepriteAnimation));
-		playerE.add(new MovementComponent());
-		playerE.add(new BroadPhaseCollisionComponent());
-		playerE.add(new DebugComponent(debugLabel));
-		playerE.add(new StageComponent());
+		BoundingBoxComponent playerBboxC = new BoundingBoxComponent();
+		MovementComponent playerMovC = new MovementComponent();
+		DebugComponent playerDebugC = new DebugComponent();
+		StageComponent playerStageC = new StageComponent();
+		AnimationComponent playerAnimationC = new AnimationComponent();
+		BroadPhaseCollisionComponent playerBphaseColC = new BroadPhaseCollisionComponent();
 
 		//serializable components
-		playerE.add(save.playerETC);
-		playerE.add(save.spawnPointC);
-		playerE.add(save.mapC);
+		PlayerETComponent playerETC = save.playerETC;
+		SpawnPointComponent playerSpawnPointC = save.spawnPointC;
+		MapComponent playerMapC = save.mapC;
 
-		//tweak numbers
-		MovementComponent playerMovC = movementM.get(playerE);
-		AnimationComponent playerAnimationC = animationM.get(playerE);
-		BoundingBoxComponent playerBboxC = bboxM.get(playerE);
-		Rectangle playerBbox = playerBboxC.bbox;
-
-		playerBbox.width = playerBbox.height = 32f;
-		playerAnimationC.currentAnimation = "idle_right";
-		playerAnimationC.offset = 16f;
+		//configure components
+		playerBboxC.bbox.setSize(32f);
 		playerMovC.maxSpeed = 240f;
 		playerMovC.acceleration = 1080f;
 		playerMovC.friction = 1080f;
 		playerMovC.gravity = -1800.0f;
 		playerMovC.jumpForce = 450.0f;
 		playerMovC.jumpTime = 0.2f;
+		Label.LabelStyle labelStyle = new Label.LabelStyle();
+		labelStyle.font = assets.getFont("dogicapixel");
+		playerDebugC.debugLabel.setStyle(labelStyle);
+		playerStageC.stage.setViewport(new ScreenViewport());
+		playerAnimationC.offset = 16f;
+		AsepriteAnimation asepriteAnimation = assets.getAsepriteAnimation("player");
+		for (String animationName : asepriteAnimation.names) {
+			float duration = asepriteAnimation.durations.get(animationName);
+			TextureRegion[] textureRegions = asepriteAnimation.textureRegions.get(animationName);
+			playerAnimationC.animations.put(animationName, new Animation<>(duration, textureRegions));
+		}
+		playerAnimationC.currentAnimation = "idle_right";
+
+		//add components
+		playerE.add(playerBboxC);
+		playerE.add(playerMovC);
+		playerE.add(playerDebugC);
+		playerE.add(playerStageC);
+		playerE.add(playerAnimationC);
+		playerE.add(playerBphaseColC);
+		playerE.add(playerETC);
+		playerE.add(playerSpawnPointC);
+		playerE.add(playerMapC);
 
 		//make player spawn at saved spawn point
-		SpawnPointComponent playerSpawnPointC = spawnPointM.get(playerE);
+		ComponentMapper<SpawnPointComponent> spawnPointM = ComponentMapper.getFor(SpawnPointComponent.class);
+		ComponentMapper<BoundingBoxComponent> bboxM = ComponentMapper.getFor(BoundingBoxComponent.class);
 		for (Entity spawnPointE : engine.getEntitiesFor(Family.one(SpawnPointEntityFactory.SpawnPointETComponent.class).get())) {
 			SpawnPointComponent spawnPointC = spawnPointM.get(spawnPointE);
 			if (Objects.equals(playerSpawnPointC.name, spawnPointC.name)) {
 				BoundingBoxComponent spawnPointBboxC = bboxM.get(spawnPointE);
 				Rectangle spawnPointBbox = spawnPointBboxC.bbox;
 
-				playerBbox.x = spawnPointBbox.x;
-				playerBbox.y = spawnPointBbox.y;
+				playerBboxC.bbox.x = spawnPointBbox.x;
+				playerBboxC.bbox.y = spawnPointBbox.y;
 			}
 		}
 
