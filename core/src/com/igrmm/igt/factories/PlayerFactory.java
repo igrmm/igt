@@ -6,6 +6,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.igrmm.igt.AsepriteAnimation;
 import com.igrmm.igt.Assets;
 import com.igrmm.igt.Save;
@@ -27,12 +28,17 @@ public class PlayerFactory {
 
 		//components dependencies
 		AsepriteAnimation asepriteAnimation = assets.getAsepriteAnimation("player");
+		Label.LabelStyle labelStyle = new Label.LabelStyle();
+		labelStyle.font = assets.getFont("dogicapixel");
+		Label debugLabel = new Label("", labelStyle);
 
 		//default components
 		playerE.add(new BoundingBoxComponent());
 		playerE.add(new AnimationComponent(asepriteAnimation));
 		playerE.add(new MovementComponent());
 		playerE.add(new BroadPhaseCollisionComponent());
+		playerE.add(new DebugComponent(debugLabel));
+		playerE.add(new StageComponent());
 
 		//serializable components
 		playerE.add(save.playerETC);
