@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="8" tileheight="8" infinite="0" nextlayerid="6" nextobjectid="51">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="8" tileheight="8" infinite="0" nextlayerid="6" nextobjectid="55">
  <tileset firstgid="1" source="../tilesets/tileset.tsx"/>
  <tileset firstgid="36" source="../objects/objects.tsx"/>
  <layer id="1" name="0" width="100" height="100">
   <data encoding="base64" compression="zlib">
-   eJzt2TkKwDAMRcEskOT+J45duEpj3OQjZkC4FOiV3jYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAr73NWWBHFVebp8COKvTIokcWPbLokUWPLHpk0SOLHln0yKJHFj2y6JFFjyx6ZBm36n8Ux8LM/GvoMW/cqr/3wszcWY95emTR438v25sDdg==
+   eJzt2TsKQlEQRMGngr/9L1hjNRl54D1SBZ13M+FsGwAAAAAAAAAAAAAAAAAA8I3DM8eXnH7aaF+1fednLi+5/rTRvmr7an2navtqfadq+2p9p2r7an2navtqfadq+2p9p2r7an2navtqfadq+2p9p2r7an2navtqfadq+2p9p2r7an2navtqfadq+z71vW3vP4Nq7h/21e7x73GPteIea8U91op7rJWV7wEAAAAAAAAAAAAAAAAAAEDXA8F0Djw=
   </data>
  </layer>
  <group id="2" name="objects">
   <objectgroup id="4" name="spawn-point">
-   <object id="48" name="start" class="spawn-point" gid="36" x="88" y="704" width="32" height="32">
+   <object id="54" class="spawn-point" gid="36" x="224" y="432" width="32" height="32">
     <properties>
      <property name="spawnPointComponent" type="class" propertytype="spawnPointComponent">
       <properties>
@@ -20,9 +20,9 @@
    </object>
   </objectgroup>
   <objectgroup id="3" name="block">
-   <object id="47" class="block" x="40" y="768" width="120" height="32"/>
-   <object id="49" class="block" x="24" y="640" width="16" height="160"/>
-   <object id="50" class="block" x="224" y="640" width="16" height="160"/>
+   <object id="51" class="block" x="200" y="432" width="400" height="48"/>
+   <object id="52" class="block" x="152" y="304" width="48" height="176"/>
+   <object id="53" class="block" x="600" y="304" width="48" height="176"/>
   </objectgroup>
  </group>
 </map>
