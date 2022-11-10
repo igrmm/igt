@@ -9,6 +9,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Disposable;
 import com.igrmm.igt.components.AnimationComponent;
 import com.igrmm.igt.components.BoundingBoxComponent;
@@ -19,8 +22,11 @@ public class RenderingSystem extends IteratingSystem implements Disposable {
 	private final OrthogonalTiledMapRenderer mapRenderer;
 	private final ComponentMapper<AnimationComponent> animationM;
 	private final ComponentMapper<BoundingBoxComponent> bboxM;
+	private final Vector3 cameraTarget;
+	private final Vector2 playerCenter;
+	private final Rectangle playerBbox;
 
-	public RenderingSystem(TiledMap tiledMap) {
+	public RenderingSystem(TiledMap tiledMap, Entity playerE) {
 		super(Family.all(BoundingBoxComponent.class, AnimationComponent.class).get());
 		batch = new SpriteBatch();
 		camera = new OrthographicCamera();
@@ -29,10 +35,16 @@ public class RenderingSystem extends IteratingSystem implements Disposable {
 		bboxM = ComponentMapper.getFor(BoundingBoxComponent.class);
 		camera.position.x = 16f;
 		camera.position.y = 16f;
+		cameraTarget = new Vector3();
+		playerCenter = new Vector2();
+		playerBbox = bboxM.get(playerE).bbox;
 	}
 
 	@Override
 	public void update(float deltaTime) {
+		playerBbox.getCenter(playerCenter);
+		cameraTarget.set(playerCenter, 0f);
+		camera.position.slerp(cameraTarget, 0.2f);
 		camera.update();
 		mapRenderer.setView(camera);
 		mapRenderer.render();
