@@ -13,6 +13,7 @@ import com.igrmm.igt.Igt;
 import com.igrmm.igt.Save;
 import com.igrmm.igt.components.MapComponent;
 import com.igrmm.igt.factories.PlayerFactory;
+import com.igrmm.igt.factories.PlayerSystemFactory;
 import com.igrmm.igt.factories.TiledMapEntityFactory;
 import com.igrmm.igt.systems.*;
 
@@ -44,7 +45,7 @@ public class GameScreen extends ScreenAdapter {
 		Entity playerE = PlayerFactory.createPlayer(engine, assets);
 
 		//create systems
-		engine.addSystem(new PlayerSystem(playerE, game));
+		engine.addSystem(PlayerSystemFactory.createPlayerSystem(playerE, game));
 		engine.addSystem(new PhysicsSystem());
 		engine.addSystem(new RenderingSystem(tiledMap));
 		engine.addSystem(new BlockSystem(playerE));
