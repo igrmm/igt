@@ -75,7 +75,7 @@ public class PlayerFactory {
 		public static final int LEFT_KEY_INDEX = 0;
 		public static final int RIGHT_KEY_INDEX = 1;
 		public static final int JUMP_KEY_INDEX = 2;
-		public final int[] keys = {Input.Keys.A, Input.Keys.D, Input.Keys.SPACE};
+		public final int[] keyBindings = {Input.Keys.A, Input.Keys.D, Input.Keys.SPACE};
 		public float timePlayed = 0f;
 	}
 }
