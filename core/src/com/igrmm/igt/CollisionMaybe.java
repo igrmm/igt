@@ -135,7 +135,8 @@ public abstract class CollisionMaybe implements Pool.Poolable, Comparable<Collis
 				normal.set(0.0f, 1.0f);
 			else
 				normal.set(0.0f, -1.0f);
-		}
+
+		} else throw new UnsupportedOperationException("Diagonal collision not implemented yet.");
 
 		return tMin;
 	}
