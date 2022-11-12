@@ -41,7 +41,8 @@ public class PlayerSystem extends EntitySystem implements Disposable {
 				"\n\ndensity: " + Gdx.graphics.getDensity() +
 				"\n\n" + Gdx.graphics.getDisplayMode().toString() +
 				"\n\nwxh: " + Gdx.graphics.getWidth() + "x" + Gdx.graphics.getHeight() +
-				"\n\ndelta: " + deltaTime);
+				"\n\ndelta: " + deltaTime +
+				"\n\nentities: " + getEngine().getEntities().size());
 
 		stage.act();
 		stage.draw();
