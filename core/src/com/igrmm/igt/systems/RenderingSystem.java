@@ -12,9 +12,11 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Disposable;
 import com.igrmm.igt.components.AnimationComponent;
 import com.igrmm.igt.components.BoundingBoxComponent;
+import com.igrmm.igt.components.StageComponent;
 
 public class RenderingSystem extends IteratingSystem implements Disposable {
 	private final SpriteBatch batch;
@@ -25,6 +27,7 @@ public class RenderingSystem extends IteratingSystem implements Disposable {
 	private final Vector3 cameraTarget;
 	private final Vector2 playerCenter;
 	private final Rectangle playerBbox;
+	private final Stage stage;
 
 	public RenderingSystem(TiledMap tiledMap, Entity playerE) {
 		super(Family.all(BoundingBoxComponent.class, AnimationComponent.class).get());
@@ -38,6 +41,7 @@ public class RenderingSystem extends IteratingSystem implements Disposable {
 		cameraTarget = new Vector3();
 		playerCenter = new Vector2();
 		playerBbox = bboxM.get(playerE).bbox;
+		stage = playerE.getComponent(StageComponent.class).stage;
 	}
 
 	@Override
@@ -60,6 +64,7 @@ public class RenderingSystem extends IteratingSystem implements Disposable {
 			batch.draw(tex, bboxC.bbox.x - offset, bboxC.bbox.y - offset);
 		}
 		batch.end();
+		stage.draw();
 	}
 
 	@Override

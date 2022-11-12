@@ -45,7 +45,6 @@ public class PlayerSystem extends EntitySystem implements Disposable {
 				"\n\nentities: " + getEngine().getEntities().size());
 
 		stage.act();
-		stage.draw();
 
 		//track time played
 		playerETC.timePlayed += deltaTime;
