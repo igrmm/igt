@@ -18,8 +18,9 @@ public abstract class CollisionMaybe implements Pool.Poolable, Comparable<Collis
 	private Rectangle dynamicRectangle;
 	private Rectangle staticRectangle;
 	private Vector2 speed;
+	private boolean resolve = false;
 
-	public void init(Entity dynamicEntity, Entity staticEntity) {
+	public void init(boolean resolve, Entity dynamicEntity, Entity staticEntity) {
 		BoundingBoxComponent dynamicBboxC = bboxM.get(dynamicEntity);
 		BoundingBoxComponent staticBboxC = bboxM.get(staticEntity);
 		MovementComponent movC = movementM.get(dynamicEntity);
@@ -27,13 +28,15 @@ public abstract class CollisionMaybe implements Pool.Poolable, Comparable<Collis
 		this.dynamicRectangle = dynamicBboxC.bbox;
 		this.staticRectangle = staticBboxC.bbox;
 		this.speed = movC.speed;
-		time = computeTime();
+		this.resolve = resolve;
+		time = computeTime(false);
 	}
 
 	@Override
 	public void reset() {
 		normal.set(0.0f, 0.0f);
 		time = 0.0f;
+		resolve = false;
 
 		dynamicRectangle = null;
 		staticRectangle = null;
@@ -57,7 +60,10 @@ public abstract class CollisionMaybe implements Pool.Poolable, Comparable<Collis
 		return Float.compare(this.getTime(), other.getTime());
 	}
 
-	public final float computeTime() {
+	/**
+	 * Set @param resolve for collision resolving if it occurs.
+	 */
+	public final float computeTime(boolean resolve) {
 		if (speed.x == 0.0f && speed.y == 0.0f)
 			return 1.0f;
 
@@ -125,16 +131,24 @@ public abstract class CollisionMaybe implements Pool.Poolable, Comparable<Collis
 
 		//set contact normal for collision solving
 		if (t0X > t0Y) {
-			if (rayOriginX > expandedRectangleX)
+			if (resolve) speed.x = 0f;
+			if (rayOriginX > expandedRectangleX) {
 				normal.set(1.0f, 0.0f);
-			else
+				if (resolve) dynamicRectangle.x = staticRectangle.x + staticRectangle.width;
+			} else {
 				normal.set(-1.0f, 0.0f);
+				if (resolve) dynamicRectangle.x = staticRectangle.x - dynamicRectangle.width;
+			}
 
 		} else if (t0X < t0Y) {
-			if (rayOriginY > expandedRectangleY)
+			if (resolve) speed.y = 0f;
+			if (rayOriginY > expandedRectangleY) {
 				normal.set(0.0f, 1.0f);
-			else
+				if (resolve) dynamicRectangle.y = staticRectangle.y + staticRectangle.height;
+			} else {
 				normal.set(0.0f, -1.0f);
+				if (resolve) dynamicRectangle.y = staticRectangle.y - dynamicRectangle.height;
+			}
 
 		} else throw new UnsupportedOperationException("Diagonal collision not implemented yet.");
 
@@ -142,18 +156,12 @@ public abstract class CollisionMaybe implements Pool.Poolable, Comparable<Collis
 	}
 
 	public final boolean occurred() {
-		float time = computeTime();
+		float time = computeTime(false);
 		return (time >= 0.0f && time < 1.0f);
 	}
 
-	public boolean resolve() {
-		float time = computeTime();
-		if (time >= 0.0f && time < 1.0f) {
-			speed.x += Math.abs(speed.x) * normal.x * (1.0f - time);
-			speed.y += Math.abs(speed.y) * normal.y * (1.0f - time);
-			return true;
-		} else {
-			return false;
-		}
+	public boolean handle() {
+		float time = computeTime(resolve);
+		return (time >= 0.0f && time < 1.0f);
 	}
 }

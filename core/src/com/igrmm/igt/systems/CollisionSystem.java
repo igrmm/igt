@@ -34,7 +34,7 @@ public class CollisionSystem extends IteratingSystem {
 		List<CollisionMaybe> collisions = bPhaseColC.collisions;
 		Collections.sort(collisions);
 		for (CollisionMaybe collision : collisions) {
-			collision.resolve();
+			collision.handle();
 			Pools.free(collision);
 		}
 		collisions.clear();

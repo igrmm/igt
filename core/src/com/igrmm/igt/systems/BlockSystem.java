@@ -113,7 +113,7 @@ public class BlockSystem extends IteratingSystem {
 		MovementComponent movC;
 
 		public void init(MovementComponent movC, Entity dynamicEntity, Entity staticEntity) {
-			super.init(dynamicEntity, staticEntity);
+			super.init(true, dynamicEntity, staticEntity);
 			this.movC = movC;
 		}
 
@@ -124,8 +124,8 @@ public class BlockSystem extends IteratingSystem {
 		}
 
 		@Override
-		public boolean resolve() {
-			if (super.resolve()) {
+		public boolean handle() {
+			if (super.handle()) {
 				if (getNormalY() > 0) {
 					movC.grounded = true;
 				}
