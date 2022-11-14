@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.igrmm.igt.Igt;
+import com.igrmm.igt.Utils;
 import com.igrmm.igt.components.DebugComponent;
 import com.igrmm.igt.components.StageComponent;
 import com.igrmm.igt.systems.PlayerSystem;
@@ -43,7 +44,7 @@ public class PlayerSystemFactory {
 		Table upperTable = new Table();
 		root.add(upperTable).fill();
 		Label debugLabel = playerE.getComponent(DebugComponent.class).debugLabel;
-		upperTable.add(debugLabel).pad(wpToPx(3));
+		upperTable.add(debugLabel).pad(Utils.wpToPx(3));
 		upperTable.add(new Actor()).expandX();
 		Button pauseButton = new Button(skin, "pause-button");
 		pauseButton.addListener(new InputListener() {
@@ -58,7 +59,7 @@ public class PlayerSystemFactory {
 				playerSystem.setPauseInput(false);
 			}
 		});
-		upperTable.add(pauseButton).size(cmToPx(1.5f)).pad(wpToPx(3)).top();
+		upperTable.add(pauseButton).size(Utils.cmToPx(1.5f)).pad(Utils.wpToPx(3)).top();
 		root.row();
 
 		//empty cell
@@ -66,8 +67,8 @@ public class PlayerSystemFactory {
 		root.row();
 
 		//lower table (VIRTUAL CONTROLLER)
-		float buttonSize = cmToPx(1.5f);
-		float buttonPad = wpToPx(3);
+		float buttonSize = Utils.cmToPx(1.5f);
+		float buttonPad = Utils.wpToPx(3);
 		Table lowerTable = new Table();
 		root.add(lowerTable).fill();
 
@@ -145,22 +146,6 @@ public class PlayerSystemFactory {
 		});
 
 		return playerSystem;
-	}
-
-	/**
-	 * @param widthPercentage desired value in screen width percentage.
-	 * @return the given screen width percentage converted to pixels.
-	 */
-	public static float wpToPx(int widthPercentage) {
-		return widthPercentage * Gdx.graphics.getWidth() / 100f;
-	}
-
-	/**
-	 * @param centimeters desired value in centimeters.
-	 * @return the given value in centimeters converted to pixels.
-	 */
-	public static float cmToPx(float centimeters) {
-		return centimeters / (2f / (Gdx.graphics.getPpcX() + Gdx.graphics.getPpcY()));
 	}
 
 	private static class GameButton extends Button {
