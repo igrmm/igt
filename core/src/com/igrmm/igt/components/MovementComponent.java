@@ -17,6 +17,7 @@ public class MovementComponent implements Component {
 	public float jumpTime = 0f;
 	public float jumpForce = 0f;
 	public float gravity = 0f;
+	public int facing = RIGHT_SIGNAL;
 
 	public int movementSignalIntention = 0;
 	public boolean jumpIntention = false;

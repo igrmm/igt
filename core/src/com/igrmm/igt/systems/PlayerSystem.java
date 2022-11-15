@@ -7,16 +7,20 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Disposable;
 import com.igrmm.igt.Igt;
+import com.igrmm.igt.components.AnimationComponent;
 import com.igrmm.igt.components.DebugComponent;
 import com.igrmm.igt.components.MovementComponent;
 import com.igrmm.igt.components.StageComponent;
 import com.igrmm.igt.factories.PlayerFactory.PlayerETComponent;
 import com.igrmm.igt.screens.PauseScreen;
 
+import java.util.Objects;
+
 public class PlayerSystem extends EntitySystem implements Disposable {
 	private final Igt game;
 	private final PlayerETComponent playerETC;
 	private final MovementComponent playerMovC;
+	private final AnimationComponent playerAnimationC;
 	private final Stage stage;
 	private final Label debugLabel;
 
@@ -28,8 +32,16 @@ public class PlayerSystem extends EntitySystem implements Disposable {
 		this.game = game;
 		playerETC = playerE.getComponent(PlayerETComponent.class);
 		playerMovC = playerE.getComponent(MovementComponent.class);
+		playerAnimationC = playerE.getComponent(AnimationComponent.class);
 		stage = playerE.getComponent(StageComponent.class).stage;
 		debugLabel = playerE.getComponent(DebugComponent.class).debugLabel;
+	}
+
+	public void setAnimation(String animation) {
+		if (!Objects.equals(playerAnimationC.currentAnimation, animation)) {
+			playerAnimationC.currentAnimation = animation;
+			playerAnimationC.stateTime = 0f;
+		}
 	}
 
 	@Override
@@ -45,6 +57,23 @@ public class PlayerSystem extends EntitySystem implements Disposable {
 				"\n\nentities: " + getEngine().getEntities().size());
 
 		stage.act();
+
+		//animations
+		if (playerMovC.movementSignalIntention != 0) playerMovC.facing = playerMovC.movementSignalIntention;
+
+		if (playerMovC.facing == MovementComponent.RIGHT_SIGNAL) {
+			if (!playerMovC.jumping)
+				setAnimation("idle_right");
+			else
+				setAnimation("jump_right");
+		}
+
+		if (playerMovC.facing == MovementComponent.LEFT_SIGNAL) {
+			if (!playerMovC.jumping)
+				setAnimation("idle_left");
+			else
+				setAnimation("jump_left");
+		}
 
 		//track time played
 		playerETC.timePlayed += deltaTime;
