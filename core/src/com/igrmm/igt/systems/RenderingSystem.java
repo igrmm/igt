@@ -4,6 +4,8 @@ import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -14,6 +16,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Disposable;
+import com.igrmm.igt.Utils;
 import com.igrmm.igt.components.AnimationComponent;
 import com.igrmm.igt.components.BoundingBoxComponent;
 import com.igrmm.igt.components.StageComponent;
@@ -42,6 +45,14 @@ public class RenderingSystem extends IteratingSystem implements Disposable {
 		playerCenter = new Vector2();
 		playerBbox = bboxM.get(playerE).bbox;
 		stage = playerE.getComponent(StageComponent.class).stage;
+
+		/* DPI STUFF - target on mobile: 1 tile ~ 40mm */
+		float tileWidth = tiledMap.getProperties().get("tilewidth", Integer.class);
+		if (Gdx.app.getType() == Application.ApplicationType.Android) {
+			camera.zoom = 1f / (Utils.cmToPx(0.4f) / tileWidth);
+		} else {
+			camera.zoom = 0.5f;
+		}
 	}
 
 	@Override
@@ -57,11 +68,12 @@ public class RenderingSystem extends IteratingSystem implements Disposable {
 		for (Entity entity : getEntities()) {
 			AnimationComponent animationC = animationM.get(entity);
 			String currentAnimation = animationC.currentAnimation;
-			float offset = animationC.offset;
+			float offsetX = animationC.offsetX;
+			float offsetY = animationC.offsetY;
 			animationC.stateTime += deltaTime;
 			TextureRegion tex = animationC.animations.get(currentAnimation).getKeyFrame(animationC.stateTime, true);
 			BoundingBoxComponent bboxC = bboxM.get(entity);
-			batch.draw(tex, bboxC.bbox.x - offset, bboxC.bbox.y - offset);
+			batch.draw(tex, bboxC.bbox.x - offsetX, bboxC.bbox.y - offsetY);
 		}
 		batch.end();
 		stage.draw();

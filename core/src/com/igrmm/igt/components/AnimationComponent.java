@@ -11,5 +11,6 @@ public class AnimationComponent implements Component {
 	public final Map<String, Animation<TextureRegion>> animations = new HashMap<>();
 	public String currentAnimation;
 	public float stateTime = 0f;
-	public float offset = 0f;
+	public float offsetX = 0f;
+	public float offsetY = 0f;
 }
