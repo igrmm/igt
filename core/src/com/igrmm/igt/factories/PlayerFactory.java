@@ -37,18 +37,18 @@ public class PlayerFactory {
 		MapComponent playerMapC = save.mapC;
 
 		//configure components
-		playerBboxC.bbox.setSize(32f);
-		playerMovC.maxSpeed = 240f;
-		playerMovC.acceleration = 1080f;
-		playerMovC.friction = 1080f;
-		playerMovC.gravity = -1800.0f;
-		playerMovC.jumpForce = 450.0f;
+		playerBboxC.bbox.setSize(10f, 20f);
+		playerMovC.maxSpeed = 60f;
+		playerMovC.acceleration = 270f;
+		playerMovC.friction = 270f;
+		playerMovC.gravity = -600f;
+		playerMovC.jumpForce = 110f;
 		playerMovC.jumpTime = 0.2f;
+		playerAnimationC.offsetX = 2f;
 		Label.LabelStyle labelStyle = new Label.LabelStyle();
 		labelStyle.font = assets.getFont("dogicapixel");
 		playerDebugC.debugLabel.setStyle(labelStyle);
 		playerStageC.stage.setViewport(new ScreenViewport());
-		playerAnimationC.offset = 16f;
 		AsepriteAnimation asepriteAnimation = assets.getAsepriteAnimation("player");
 		for (String animationName : asepriteAnimation.names) {
 			float duration = asepriteAnimation.durations.get(animationName);
