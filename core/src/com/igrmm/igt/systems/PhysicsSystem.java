@@ -58,7 +58,7 @@ public class PhysicsSystem extends IteratingSystem {
 
 		if (gravity < 0) movementC.grounded = false;
 
-		if (movementC.jumping && movementC.speed.y <= 0.0f) gravity *= 2.0f;
+		if (movementC.jumping && movementC.speed.y <= 0.0f) gravity *= 1.5f;
 		movementC.speed.y += gravity * deltaTime * deltaTime;
 	}
 }
