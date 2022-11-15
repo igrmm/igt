@@ -62,17 +62,27 @@ public class PlayerSystem extends EntitySystem implements Disposable {
 		if (playerMovC.movementSignalIntention != 0) playerMovC.facing = playerMovC.movementSignalIntention;
 
 		if (playerMovC.facing == MovementComponent.RIGHT_SIGNAL) {
-			if (!playerMovC.jumping)
-				setAnimation("idle_right");
-			else
+			if (!playerMovC.jumping) {
+				if (Math.abs(playerMovC.speed.x) > 0.7f * playerMovC.maxSpeed * deltaTime) {
+					setAnimation("walk_right");
+				} else {
+					setAnimation("idle_right");
+				}
+			} else {
 				setAnimation("jump_right");
+			}
 		}
 
 		if (playerMovC.facing == MovementComponent.LEFT_SIGNAL) {
-			if (!playerMovC.jumping)
-				setAnimation("idle_left");
-			else
+			if (!playerMovC.jumping) {
+				if (Math.abs(playerMovC.speed.x) > 0.7f * playerMovC.maxSpeed * deltaTime) {
+					setAnimation("walk_left");
+				} else {
+					setAnimation("idle_left");
+				}
+			} else {
 				setAnimation("jump_left");
+			}
 		}
 
 		//track time played
